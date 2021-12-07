@@ -1,0 +1,26 @@
+{
+  "name": "auto-shine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "build": "npx tsc"
+  },
+  "author": "Terrel Jones <TerrelRJones@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^3.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.11.10",
+    "prisma": "^3.6.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.2"
+  }
+}
