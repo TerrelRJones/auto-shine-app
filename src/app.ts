@@ -8,7 +8,8 @@ const app: Application = express();
 const port: number | string = process.env.PORT || 4001;
 
 // Routes
-const user = require("./routes/notes.routes");
+const userRegister = require("./routes/register.routes");
+const vehicle = require("./routes/vehicle.routes");
 
 // MIDDLEWARE
 app.use(cors());
@@ -17,7 +18,8 @@ app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 // ENDPOINTS
-app.use("/", user);
+app.use("/api/v1", userRegister);
+app.use("/api/v1", vehicle);
 
 app.listen(port, () => {
   console.log(`Booming on port:${port}. It's LIT!`);

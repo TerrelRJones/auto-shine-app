@@ -11,8 +11,32 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        Int    @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String @unique
+  password  String
 
+  vehicle Vehicle[]
+  address Address[]
+
+  createdAt DateTime @default(now())
+}
+
+model Vehicle {
+  id        Int    @id @default(autoincrement())
+  make      String
+  model     String
+  userId    User   @relation(fields: [vehicleId], references: [id])
+  vehicleId Int
+}
+
+model Address {
+  id        Int    @id @default(autoincrement())
+  state     String
+  city      String
+  zip       Int
+  street    String
+  userId    User   @relation(fields: [addressId], references: [id])
+  addressId Int
 }
