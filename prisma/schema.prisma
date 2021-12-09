@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
+  id        String @id @unique @default(uuid())
   firstName String
   lastName  String
   email     String @unique
@@ -24,19 +24,19 @@ model User {
 }
 
 model Vehicle {
-  id        Int    @id @default(autoincrement())
+  id        String @id @unique @default(uuid())
   make      String
   model     String
   userId    User   @relation(fields: [vehicleId], references: [id])
-  vehicleId Int
+  vehicleId String
 }
 
 model Address {
-  id        Int    @id @default(autoincrement())
+  id        String @id @unique @default(uuid())
   state     String
   city      String
   zip       Int
   street    String
   userId    User   @relation(fields: [addressId], references: [id])
-  addressId Int
+  addressId String
 }

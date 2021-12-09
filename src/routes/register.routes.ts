@@ -20,8 +20,6 @@ router.post(
   ) => {
     const { firstName, lastName, email, password, password2 } = req.body;
 
-    // TODO: Encrpyt password to database
-
     if (password !== password2) {
       return res.send("Passwords do not match");
     }
@@ -43,25 +41,7 @@ router.post(
     } catch (error) {
       return res.send(error);
     }
-  },
-
-  // GET USERS
-  router.get(":id", async (req: Request<{ id: string }>, res: Response) => {
-    const { id } = req.params;
-
-    try {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: Number(id),
-        },
-      });
-
-      return res.send(`user ${id} has not been found`);
-    } catch (error) {
-      console.error();
-      return res.send(error);
-    }
-  }),
-
-  (module.exports = router)
+  }
 );
+
+module.exports = router;

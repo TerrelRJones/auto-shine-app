@@ -10,7 +10,7 @@ router
   // CREATE Vehicle
   .post(
     async (
-      req: Request<{}, {}, { make: string; model: string; vehicleId: number }>,
+      req: Request<{}, {}, { make: string; model: string; vehicleId: string }>,
       res: Response
     ) => {
       const { make, model, vehicleId } = req.body;
@@ -19,7 +19,7 @@ router
         data: {
           make,
           model,
-          vehicleId: Number(vehicleId),
+          vehicleId: vehicleId,
         },
       });
 
