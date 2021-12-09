@@ -1,73 +1,67 @@
 import { Router, Request, Response } from "express";
-const router: Router = Router();
-
 import { PrismaClient } from "@prisma/client";
+
+const router: Router = Router();
 const prisma = new PrismaClient();
 
-router
-  .route("/register")
+const bcrypt = require("bcrypt");
 
-  // CREATE USR
-  .post(
-    async (
-      req: Request<
-        {},
-        {},
-        {
-          firstName: string;
-          lastName: string;
-          email: string;
-          password: string;
-        }
-      >,
-      res: Response
-    ) => {
-      const { firstName, lastName, email, password } = req.body;
+router.post(
+  "/register",
+  async (
+    req: Request<{
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+      password2: string;
+    }>,
+    res: Response
+  ) => {
+    const { firstName, lastName, email, password, password2 } = req.body;
+
+    // TODO: Encrpyt password to database
+
+    if (password !== password2) {
+      return res.send("Passwords do not match");
+    }
+
+    try {
+      // bcrypt hashing password into db
+      const hashedPassword = await bcrypt.hash(password, 12);
 
       const user = await prisma.user.create({
         data: {
           firstName,
           lastName,
           email,
-          password,
-          vehicle: {},
-          address: {},
+          password: hashedPassword,
         },
       });
 
       return res.status(200).json(user);
+    } catch (error) {
+      return res.send(error);
     }
-  )
+  },
 
-  // EDIT USERS
-  .put((req: Request, res: Response) => {
-    return res.sendStatus(200);
-  });
+  // GET USERS
+  router.get(":id", async (req: Request<{ id: string }>, res: Response) => {
+    const { id } = req.params;
 
-// GET USERS
-router.get(":id", async (req: Request<{ id: string }>, res: Response) => {
-  const { id } = req.params;
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: Number(id),
-    },
-  });
+      return res.send(`user ${id} has not been found`);
+    } catch (error) {
+      console.error();
+      return res.send(error);
+    }
+  }),
 
-  return res.send(`user ${id} has not been found`);
-});
-
-// DELETE USERS
-router.delete(":id", async (req: Request<{ id: string }>, res: Response) => {
-  const { id } = req.params;
-
-  const deleteUser = await prisma.user.delete({
-    where: {
-      id: Number(id),
-    },
-  });
-
-  return res.send(`User ${id} has been`);
-});
-
-module.exports = router;
+  (module.exports = router)
+);
