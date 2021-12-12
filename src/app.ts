@@ -5,7 +5,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const app: Application = express();
-const port: number | string = process.env.PORT || 4001;
 
 // Routes
 const userRegister: Router = require("./routes/register.routes");
@@ -25,6 +24,4 @@ app.use("/api/v1", userLogin);
 app.use("/api/v1", vehicle);
 app.use("/api/v1", users);
 
-app.listen(port, () => {
-  console.log(`Booming on port:${port}. It's LIT!`);
-});
+export { app };

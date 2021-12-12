@@ -6,42 +6,38 @@ const prisma = new PrismaClient();
 
 const bcrypt = require("bcrypt");
 
-router.post(
-  "/register",
-  async (
-    req: Request<{
-      firstName: string;
-      lastName: string;
-      email: string;
-      password: string;
-      password2: string;
-    }>,
-    res: Response
-  ) => {
-    const { firstName, lastName, email, password, password2 } = req.body;
+interface regUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  password2: string;
+}
 
-    if (password !== password2) {
-      return res.send("Passwords do not match");
-    }
+router.post("/register", async (req: Request<regUser>, res: Response) => {
+  const { firstName, lastName, email, password, password2 } = req.body;
 
-    try {
-      // bcrypt hashing password into db
-      const hashedPassword = await bcrypt.hash(password, 12);
-
-      const user = await prisma.user.create({
-        data: {
-          firstName,
-          lastName,
-          email,
-          password: hashedPassword,
-        },
-      });
-
-      return res.status(200).json(user);
-    } catch (error) {
-      return res.send(error);
-    }
+  if (password !== password2) {
+    return res.send("Passwords do not match");
   }
-);
+
+  try {
+    // bcrypt hashing password into db
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const user = await prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    return res.json(user).status(200);
+  } catch (error) {
+    return res.send(error);
+  }
+});
 
 module.exports = router;
