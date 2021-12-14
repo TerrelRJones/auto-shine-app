@@ -21,6 +21,7 @@ model User {
   address Address[]
 
   createdAt DateTime @default(now())
+  @@map(name: "user")
 }
 
 model Vehicle {
@@ -29,6 +30,8 @@ model Vehicle {
   model     String
   userId    User   @relation(fields: [vehicleId], references: [id])
   vehicleId String
+
+  @@map(name: "vehicle")
 }
 
 model Address {
@@ -39,4 +42,6 @@ model Address {
   street    String
   userId    User   @relation(fields: [addressId], references: [id])
   addressId String
+
+  @@map(name: "address")
 }

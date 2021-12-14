@@ -17,11 +17,16 @@ interface regUser {
 router.post("/register", async (req: Request<regUser>, res: Response) => {
   const { firstName, lastName, email, password, password2 } = req.body;
 
-  if (password !== password2) {
-    return res.send("Passwords do not match");
-  }
-
   try {
+    if (!firstName || !lastName || !email || !password || !password2) {
+      res.sendStatus(400);
+      return;
+    }
+
+    if (password !== password2) {
+      return res.send("Passwords do not match");
+    }
+
     // bcrypt hashing password into db
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -34,7 +39,7 @@ router.post("/register", async (req: Request<regUser>, res: Response) => {
       },
     });
 
-    return res.json(user).status(200);
+    return res.json(user);
   } catch (error) {
     return res.send(error);
   }
