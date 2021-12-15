@@ -2,7 +2,7 @@
   "name": "auto-shine",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "engines": {
     "node": "14.17.0",
     "npm": "6.14.13"
