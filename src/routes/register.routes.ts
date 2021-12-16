@@ -1,21 +1,13 @@
 import { Router, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import jwtGenerator from "../utils/jwtGenerator";
 
 const router: Router = Router();
-const prisma = new PrismaClient();
+import prisma from "../client";
+import { User } from "@prisma/client";
 
 const bcrypt = require("bcrypt");
 
-interface regUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  password2: string;
-}
-
-router.post("/register", async (req: Request<regUser>, res: Response) => {
+router.post("/register", async (req: Request<User>, res: Response) => {
   const { firstName, lastName, email, password, password2 } = req.body;
 
   try {

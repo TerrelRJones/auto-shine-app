@@ -1,13 +1,12 @@
 import { Router, Request, Response } from "express";
 const router: Router = Router();
 
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../client";
 
 // GET USERS with Vehicles attached
-router.get(":id", async (req: Request<{ id: string }>, res: Response) => {
+router.get("/user/:id", async (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
 
   try {
     const user = await prisma.user.findUnique({

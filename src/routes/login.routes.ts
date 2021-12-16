@@ -1,8 +1,7 @@
 import { Router, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 
 const router: Router = Router();
-const prisma = new PrismaClient();
+import prisma from "../client";
 
 const bcrypt = require("bcrypt");
 

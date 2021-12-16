@@ -26,13 +26,15 @@ model User {
 }
 
 model Vehicle {
-  id        String   @id @unique @default(uuid())
-  make      String
-  model     String
-  userId    User     @relation(fields: [vehicleId], references: [id])
-  vehicleId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String        @id @unique @default(uuid())
+  year         String
+  make         String
+  model        String
+  userId       User          @relation(fields: [vehicleId], references: [id])
+  vehicleId    String
+  appointments Appointment[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@map(name: "vehicle")
 }
@@ -49,4 +51,15 @@ model Address {
   updatedAt DateTime @updatedAt
 
   @@map(name: "address")
+}
+
+model Appointment {
+  id        String   @id @unique @default(uuid())
+  date      DateTime
+  address   String
+  type      String
+  Vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  vehicleId String
+
+  @@map("appointment")
 }
