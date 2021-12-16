@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import jwtGenerator from "../utils/jwtGenerator";
 
 const router: Router = Router();
 const prisma = new PrismaClient();
@@ -38,6 +39,13 @@ router.post("/register", async (req: Request<regUser>, res: Response) => {
         password: hashedPassword,
       },
     });
+
+    // const newWser = await prisma.user.findUnique({ where: { email: email } });
+
+    // if (newWser === null) return res.json({ error: "No user found" });
+
+    // //token
+    // const token: string = jwtGenerator(newWser.id, newWser.email);
 
     return res.json(user);
   } catch (error) {

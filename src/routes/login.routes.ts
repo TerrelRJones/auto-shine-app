@@ -25,7 +25,9 @@ router.post(
 
       // authenticate user
       if (!validPassword) {
-        return res.status(500).json("INCORRECRT PASSWORD. Please try again");
+        return res
+          .status(500)
+          .json({ error: "INCORRECRT PASSWORD. Please try again" });
       }
 
       return res.status(200).json("Logged in!");
