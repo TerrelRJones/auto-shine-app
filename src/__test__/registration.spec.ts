@@ -38,18 +38,29 @@ describe("/POST ", () => {
       password2: "password",
     });
 
-    expect(res.statusCode).toBe(400);
+    await expect(res.body).toEqual(
+      expect.objectContaining({
+        error: "All fields required!",
+      })
+    );
   });
 
-  // test('Should respond "Passwords dont match", if passwords don\'t match', async () => {
-  //   const res = await request.post("/api/v1/register").send({
-  //     firstName: "first_test",
-  //     lastName: "last_test",
-  //     email: "test@test.com",
-  //     password: "password",
-  //     password2: "passwor",
-  //   });
+  test('Should respond "Passwords dont match", if passwords dont match', async () => {
+    const res = await request
+      .post("/api/v1/register")
+      .send({
+        firstName: "first_test",
+        lastName: "last_test",
+        email: "test@test.com",
+        password: "password",
+        password2: "passwor",
+      })
+      .expect("Content-Type", /json/);
 
-  //   expect(res.body.json).toEqual({ error: "Passwords do not match" });
-  // });
+    await expect(res.body).toEqual(
+      expect.objectContaining({
+        error: "Passwords do not match",
+      })
+    );
+  });
 });

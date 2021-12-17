@@ -29,7 +29,7 @@ router.post(
           .json({ error: "INCORRECRT PASSWORD. Please try again" });
       }
 
-      return res.status(200).json("Logged in!");
+      return res.status(200).json({ msg: "Logged in!" });
     } catch (error) {
       console.error();
       res.status(500).send(error);
