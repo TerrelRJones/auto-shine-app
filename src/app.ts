@@ -21,9 +21,11 @@ app.use(morgan("dev"));
 // ENDPOINTS
 
 app.get("/", (req: Request, res: Response) => {
-  res.json({
-    name: "Hello Rell",
-  });
+  res
+    .json({
+      name: "Hello Rell",
+    })
+    .sendStatus(200);
 });
 
 app.use("/api/v1", userRegister);
@@ -31,4 +33,5 @@ app.use("/api/v1", userLogin);
 app.use("/api/v1", vehicle);
 app.use("/api/v1", users);
 
-export { app };
+// export { app };
+module.exports = app;
