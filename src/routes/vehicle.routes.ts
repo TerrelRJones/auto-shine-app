@@ -12,7 +12,7 @@ router.post("/createVehicle", async (req: Request<Vehicle>, res: Response) => {
       year,
       make,
       model,
-      vehicleId: vehicleId,
+      vehicleId,
     },
   });
 

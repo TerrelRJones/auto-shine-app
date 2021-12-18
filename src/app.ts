@@ -6,7 +6,6 @@ const morgan = require("morgan");
 
 const app: Application = express();
 
-// Routes
 const userRegister: Router = require("./routes/register.routes");
 const userLogin: Router = require("./routes/login.routes");
 const vehicle: Router = require("./routes/vehicle.routes");
@@ -19,7 +18,6 @@ app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 // ENDPOINTS
-
 app.get("/", (req: Request, res: Response) => {
   res
     .json({
@@ -28,10 +26,10 @@ app.get("/", (req: Request, res: Response) => {
     .sendStatus(200);
 });
 
+// Routes
 app.use("/api/v1", userRegister);
 app.use("/api/v1", userLogin);
 app.use("/api/v1", vehicle);
 app.use("/api/v1", users);
 
-// export { app };
 module.exports = app;

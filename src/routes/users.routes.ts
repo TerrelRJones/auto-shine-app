@@ -6,7 +6,6 @@ import prisma from "../client";
 // GET USERS with Vehicles attached
 router.get("/user/:id", async (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params;
-  // console.log(id);
 
   try {
     const user = await prisma.user.findUnique({
@@ -22,7 +21,6 @@ router.get("/user/:id", async (req: Request<{ id: string }>, res: Response) => {
   } catch (error) {
     console.error();
     return res.send(`user ${id} has not been found`);
-    // return res.send(error);
   }
 });
 
