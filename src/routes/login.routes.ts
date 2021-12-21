@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+const jwt = require("jsonwebtoken");
 
 const router: Router = Router();
 import prisma from "../client";
@@ -29,7 +30,11 @@ router.post(
           .json({ error: "INCORRECRT PASSWORD. Please try again" });
       }
 
-      return res.status(200).json({ msg: "Logged in!" });
+      const token = await jwt.sign(user, "SecretSauce", {
+        expiresIn: "8hr",
+      });
+
+      return res.status(200).json({ msg: "Logged in!", token: token });
     } catch (error) {
       console.error();
       res.status(500).send(error);
