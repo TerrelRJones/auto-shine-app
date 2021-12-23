@@ -5,3 +5,4 @@ src/.env
 
 /dist/
 Docs
+/client/
