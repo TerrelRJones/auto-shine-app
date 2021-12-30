@@ -4,6 +4,8 @@ export type AuthData = {
   name: string;
 };
 const signIn = (email: string, _password: string): Promise<AuthData> => {
+  const JWTTokenMock =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikx1Y2FzIEdhcmNleiIsImlhdCI6MTUxNjIzOTAyMn0.oK5FZPULfF-nfZmiumDGiufxf10Fe2KiGe9G5Njoa64";
   // this is a mock of an API call, in a real app
   // will be need connect with some real API,
   // send email and password, and if credential is corret
@@ -22,6 +24,3 @@ const signIn = (email: string, _password: string): Promise<AuthData> => {
 export const authService = {
   signIn,
 };
-
-const JWTTokenMock =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikx1Y2FzIEdhcmNleiIsImlhdCI6MTUxNjIzOTAyMn0.oK5FZPULfF-nfZmiumDGiufxf10Fe2KiGe9G5Njoa64";

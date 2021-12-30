@@ -46,10 +46,10 @@ const RegistrationScreen = () => {
             fontSize: 20,
             fontWeight: "bold",
             textTransform: "uppercase",
-            alignSelf: "center",
+            marginBottom: 20,
           }}
         >
-          Create an account
+          Create Account
         </Text>
         <CustomInput
           placeholder="First"
@@ -82,9 +82,18 @@ const RegistrationScreen = () => {
           secureTextEntry
         />
         <CustomButton title="Register" onPress={() => auth.signIn} />
-        <Text>Already have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text>Log in</Text>
+        <View style={{ flexDirection: "row", marginVertical: 5 }}>
+          <Text style={{ fontWeight: "600" }}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <Text
+              style={{ marginLeft: 5, color: "#2C9BF0", fontWeight: "600" }}
+            >
+              Login
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={() => null}>
+          <Text style={{ color: "#2C9BF0", fontWeight: "600" }}>Privacy</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -97,5 +106,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+    backgroundColor: "white",
   },
 });

@@ -16,7 +16,9 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [authData, setAuthData] = useState<AuthData>();
+  // const [authData, setAuthData] = useState<AuthData>();
+  const [authData, setAuthData] = useState(true);
+  // const [authData, setAuthData] = useState(false);
 
   //the AuthContext start with loading equals true
   //and stay like this, until the data be load from Async Storage
