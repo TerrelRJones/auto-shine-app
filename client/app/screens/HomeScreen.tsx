@@ -36,7 +36,7 @@ const HomeScreen = () => {
     <>
       <Text
         style={{
-          fontSize: 20,
+          fontSize: 25,
           fontWeight: "800",
           textTransform: "uppercase",
         }}
@@ -47,7 +47,7 @@ const HomeScreen = () => {
       <View>
         <Text
           style={{
-            fontSize: 15,
+            fontSize: 18,
             fontWeight: "bold",
             marginTop: 10,
           }}
@@ -56,7 +56,7 @@ const HomeScreen = () => {
         </Text>
         <Text
           style={{
-            fontSize: 15,
+            fontSize: 20,
             fontWeight: "600",
             color: "gray",
           }}
@@ -68,30 +68,18 @@ const HomeScreen = () => {
         style={{
           fontSize: 20,
           fontWeight: "bold",
-          marginTop: 20,
+          marginTop: 40,
         }}
       >
         Services
       </Text>
       <View style={styles.container}>
-        {/* <TouchableOpacity>
-          <View style={styles.serviceContainer}>
-            <View
-              style={{
-                width: 100,
-                height: 100,
-                backgroundColor: "black",
-              }}
-            ></View>
-            <Text style={styles.serviceText}>Standard Wash</Text>
-          </View>
-        </TouchableOpacity> */}
         <FlatList
           data={data}
           horizontal={false}
           numColumns={2}
           keyExtractor={(item) => item.id}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <TouchableOpacity onPress={() => null}>
               <View style={styles.serviceContainer}>
                 <View
