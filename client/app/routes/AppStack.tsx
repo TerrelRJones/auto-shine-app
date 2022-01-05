@@ -5,6 +5,7 @@ import HomeScreen from "../screens/HomeScreen";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MdIcons from "@expo/vector-icons/MaterialIcons";
+import HomeStack from "./HomeStack";
 
 function ProfileScreen() {
   return (
@@ -49,7 +50,7 @@ const AppStackScreen = () => {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeStack}
           options={{ headerShown: false }}
         />
         <Tab.Screen

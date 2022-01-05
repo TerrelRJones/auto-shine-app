@@ -1,3 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { HomeStackParams } from "../routes/HomeStack";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -31,6 +34,9 @@ const HomeScreen = () => {
       img: require("../assets/img/carCleanPerson.png"),
     },
   ]);
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<HomeStackParams>>();
 
   return (
     <>
@@ -80,7 +86,7 @@ const HomeScreen = () => {
           numColumns={2}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => null}>
+            <TouchableOpacity onPress={() => navigation.navigate("Service")}>
               <View style={styles.serviceContainer}>
                 <View
                   style={{
