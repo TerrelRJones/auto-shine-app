@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import HomeScreen from "../screens/HomeScreen";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MdIcons from "@expo/vector-icons/MaterialIcons";
@@ -30,7 +29,7 @@ const AppStackScreen = () => {
       <Tab.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size = 30 }) => {
+          tabBarIcon: ({ focused, color, size = 24 }) => {
             let iconName;
 
             if (route.name === "Home") {

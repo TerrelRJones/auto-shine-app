@@ -3,10 +3,7 @@ import RegistrationScreen from "../screens/RegistrationScreen";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-type AuthStackParams = {
-  Registration: undefined;
-  Login: undefined;
-};
+import { AuthStackParams } from "../types";
 
 const Auth = createNativeStackNavigator<AuthStackParams>();
 

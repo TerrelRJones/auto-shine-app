@@ -2,13 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import { AuthStackParams } from "../routes/AuthStack";
+import { AuthStackParams } from "../types";
 
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuth } from "../contexts/Auth";
+import Title from "../components/Title";
 
 const RegistrationScreen = () => {
   const [firstName, setFirstName] = useState("");
@@ -41,16 +42,7 @@ const RegistrationScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            marginBottom: 20,
-          }}
-        >
-          Create Account
-        </Text>
+        <Title title="Create Account" />
         <CustomInput
           placeholder="First"
           value={firstName}
