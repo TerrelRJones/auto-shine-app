@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { HomeStackParams } from "../routes/HomeStack";
-import React, { useState } from "react";
+import { RouteProp } from "@react-navigation/native";
+import { HomeStackParams } from "../types";
 import {
   StyleSheet,
   Text,
@@ -11,44 +11,27 @@ import {
   Image,
 } from "react-native";
 
-const HomeScreen = () => {
-  const [data, setData] = useState([
-    {
-      id: "1",
-      product: "Standard Wash",
-      img: require("../assets/img/wash.png"),
-    },
-    {
-      id: "2",
-      product: "Interior",
-      img: require("../assets/img/interiorSeat.png"),
-    },
-    {
-      id: "3",
-      product: "Polish",
-      img: require("../assets/img/polishHands.png"),
-    },
-    {
-      id: "4",
-      product: "Premium Detail",
-      img: require("../assets/img/carCleanPerson.png"),
-    },
-  ]);
+import serviceData from "../data/service";
+import Title from "../components/Title";
 
-  const navigation =
-    useNavigation<NativeStackNavigationProp<HomeStackParams>>();
+const HomeScreen = () => {
+  // Navigation //
+  // const navigation =
+  //   useNavigation<NativeStackNavigationProp<HomeStackParams>>();
+  const navigation = useNavigation();
+
+  // type ServiceScreenProp = RouteProp<HomeStackParams, "Profile">;
+
+  const serviceScreenNavigate = (serviceId) => {
+    // fix props for navigate
+    navigation.navigate("Service", {
+      serviceId: serviceId,
+    });
+  };
 
   return (
     <>
-      <Text
-        style={{
-          fontSize: 25,
-          fontWeight: "800",
-          textTransform: "uppercase",
-        }}
-      >
-        Hello, Terrel
-      </Text>
+      <Title title="Hello, Terrel" />
 
       <View>
         <Text
@@ -81,12 +64,12 @@ const HomeScreen = () => {
       </Text>
       <View style={styles.container}>
         <FlatList
-          data={data}
+          data={serviceData}
           horizontal={false}
           numColumns={2}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate("Service")}>
+            <TouchableOpacity onPress={() => serviceScreenNavigate(item.id)}>
               <View style={styles.serviceContainer}>
                 <View
                   style={{
@@ -114,6 +97,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 5,
+    backgroundColor: "white",
   },
   serviceContainer: {
     backgroundColor: "whitesmoke",

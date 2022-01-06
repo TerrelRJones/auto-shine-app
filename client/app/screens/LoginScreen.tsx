@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthStackParams } from "../routes/AuthStack";
 
 import { useAuth } from "../contexts/Auth";
+import Title from "../components/Title";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -38,16 +39,7 @@ const LoginScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            textTransform: "uppercase",
-            marginBottom: 20,
-          }}
-        >
-          Login
-        </Text>
+        <Title title="Login" />
         <CustomInput
           placeholder="email"
           value={email}
