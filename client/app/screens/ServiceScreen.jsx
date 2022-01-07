@@ -1,16 +1,12 @@
 import React from "react";
-import {
-  Pressable,
-  ScrollViewBase,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View, FlatList } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { MaterialIcons, Fontisto } from "@expo/vector-icons/";
+import { Fontisto } from "@expo/vector-icons/";
 
 import serviceData from "../data/service";
 import Title from "../components/Title";
+
+import { dateData } from "../data/dateData";
 
 // interface User {
 //   firstName: string;
@@ -18,7 +14,6 @@ import Title from "../components/Title";
 
 const ServiceScreen = () => {
   const navigation = useNavigation();
-
   const route = useRoute();
 
   const service = serviceData.find(
@@ -31,24 +26,32 @@ const ServiceScreen = () => {
         <Pressable onPress={() => navigation.goBack()} style={styles.btn}>
           <Fontisto name="angle-dobule-left" size={24} />
         </Pressable>
-        <Title title={service.product} />
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Title title={service.product} />
+        </View>
       </View>
       {/* DATES  */}
       <View style={styles.datesContainer}>
         <Text style={styles.dateTitle}>Date</Text>
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.datesBtnContainer}>
-            <Text style={styles.datesTitle}>Today</Text>
-            <Text style={styles.datesDate}>13 Jan</Text>
-          </View>
-          <View style={styles.datesBtnContainer}>
-            <Text style={styles.datesTitle}>Tommorow</Text>
-            <Text style={styles.datesDate}>13 Jan</Text>
-          </View>
-          <View style={styles.datesBtnContainer}>
-            <Text style={styles.datesTitle}>Friday</Text>
-            <Text style={styles.datesDate}>14 Jan</Text>
-          </View>
+        <View>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={dateData}
+            renderItem={({ item }) => (
+              <View style={styles.datesBtnContainer}>
+                <Text style={styles.datesTitle}>{item.title}</Text>
+                <Text style={styles.datesDate}>{item.day}</Text>
+              </View>
+            )}
+            keyExtractor={(item) => item.id}
+          />
         </View>
       </View>
     </View>
