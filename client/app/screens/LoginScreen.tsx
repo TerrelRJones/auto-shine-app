@@ -6,7 +6,7 @@ import CustomButtonSecondary from "../components/CustomButtonSecondary";
 import CustomInput from "../components/CustomInput";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AuthStackParams } from "../routes/AuthStack";
+import { AuthStackParams } from "../types";
 
 import { useAuth } from "../contexts/Auth";
 import Title from "../components/Title";
