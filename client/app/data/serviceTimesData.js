@@ -1,0 +1,18 @@
+export const serviceTimeData = [
+  { id: 1, time: "9:00AM" },
+  { id: 2, time: "9:30AM" },
+  { id: 3, time: "10:00AM" },
+  { id: 4, time: "10:30AM" },
+  { id: 5, time: "11:00AM" },
+  { id: 6, time: "11:30AM" },
+  { id: 7, time: "12:00PM" },
+  { id: 8, time: "12:30PM" },
+  { id: 9, time: "1:00PM" },
+  { id: 10, time: "1:30PM" },
+  { id: 11, time: "2:00PM" },
+  { id: 12, time: "2:30PM" },
+  { id: 13, time: "3:00PM" },
+  { id: 14, time: "3:30PM" },
+  { id: 15, time: "4:00PM" },
+  { id: 16, time: "4:30PM" },
+];
