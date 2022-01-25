@@ -34,7 +34,9 @@ router.post(
         expiresIn: "8hr",
       });
 
-      return res.status(200).json({ msg: "Logged in!", token: token });
+      return res
+        .status(200)
+        .json({ msg: "Logged in!", userId: user.id, token: token });
     } catch (error) {
       console.error();
       res.status(500).send(error);

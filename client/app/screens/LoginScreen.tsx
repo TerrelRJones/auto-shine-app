@@ -1,6 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomButtonSecondary from "../components/CustomButtonSecondary";
 import CustomInput from "../components/CustomInput";
@@ -14,27 +20,16 @@ import Title from "../components/Title";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, isLoading] = useState(false);
   const auth = useAuth();
+
+  const signIn = async () => {
+    isLoading(true);
+    await auth.signIn(email, password);
+  };
 
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthStackParams>>();
-
-  // const submitCredintials = async () => {
-  //   const user = await fetch("http://localhost:4001/api/v1/register", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     }),
-  //   });
-
-  //   console.log(user);
-  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,12 +47,11 @@ const LoginScreen = () => {
           setValue={setPassword}
           secureTextEntry
         />
-        <CustomButton
-          title="Login"
-          onPress={() => {
-            auth.signIn();
-          }}
-        />
+        {loading ? (
+          <ActivityIndicator color={"#000"} animating={true} size="small" />
+        ) : (
+          <CustomButton title="Login" onPress={signIn} />
+        )}
         <CustomButtonSecondary title="Forgot Password" onPress={() => null} />
         <View style={{ flexDirection: "row", marginVertical: 5 }}>
           <Text style={{ fontWeight: "600" }}>No account?</Text>

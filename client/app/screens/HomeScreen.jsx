@@ -13,8 +13,12 @@ import {
 
 import serviceData from "../data/service";
 import Title from "../components/Title";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { useEffect, useState } from "react";
 
 const HomeScreen = () => {
+  const [userData, setUserData] = useState();
   // Navigation //
   // const navigation =
   //   useNavigation<NativeStackNavigationProp<HomeStackParams>>();
@@ -29,9 +33,34 @@ const HomeScreen = () => {
     });
   };
 
+  const _retrieveData = async () => {
+    try {
+      const data = await AsyncStorage.getItem("@AuthData");
+      if (data !== null) {
+        // console.log(JSON.parse(data));
+        setUserData(JSON.parse(data));
+      }
+    } catch (e) {
+      console.log("error retrieving data");
+    }
+  };
+
+  const getUserInfo = async () => {
+    const user = await fetch(
+      `http://localhost:4001/api/v1/user/0b92bd22-0f6b-4a37-813b-23ae561fa64e`
+    );
+    const data = await user.json();
+    console.log(data);
+  };
+
+  useEffect(() => {
+    _retrieveData();
+    getUserInfo();
+  }, []);
+
   return (
     <>
-      <Title title="Hello, Terrel" />
+      <Title title="Terrel" />
 
       <View>
         <Text

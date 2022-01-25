@@ -17,7 +17,7 @@ router.get("/user/:id", async (req: Request<{ id: string }>, res: Response) => {
       },
     });
 
-    return res.json(user);
+    return res.send(200).json(user);
   } catch (error) {
     console.error();
     return res.send(`user ${id} has not been found`);

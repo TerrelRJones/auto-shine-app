@@ -17,8 +17,6 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [authData, setAuthData] = useState<AuthData>();
-  // const [authData, setAuthData] = useState(true);
-  // const [authData, setAuthData] = useState(false);
 
   //the AuthContext start with loading equals true
   //and stay like this, until the data be load from Async Storage
@@ -46,13 +44,10 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  const signIn = async () => {
+  const signIn = async (email: string, password: string) => {
     //call the service passing credential (email and password).
     //In a real App this data will be provided by the user from some InputText components.
-    const _authData = await authService.signIn(
-      "lucasgarcez@email.com",
-      "123456"
-    );
+    const _authData = await authService.signIn(email, password);
 
     //Set the data in the context, so the App can be notified
     //and send the user to the AuthStack

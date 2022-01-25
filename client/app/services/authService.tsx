@@ -1,22 +1,30 @@
 export type AuthData = {
   token: string;
   email: string;
-  name: string;
+  userId: string;
 };
-const signIn = (email: string, password: string): Promise<AuthData> => {
-  const JWTTokenMock =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikx1Y2FzIEdhcmNleiIsImlhdCI6MTUxNjIzOTAyMn0.oK5FZPULfF-nfZmiumDGiufxf10Fe2KiGe9G5Njoa64";
-  // this is a mock of an API call, in a real app
-  // will be need connect with some real API,
-  // send email and password, and if credential is corret
-  //the API will resolve with some token and another datas as the below
+const signIn = async (email: string, password: string): Promise<AuthData> => {
+  const user = await fetch("http://localhost:4001/api/v1/login", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  });
+
+  const JWT = await user.json();
+  // console.log(JWT);
 
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        token: JWTTokenMock,
+        token: JWT.token,
         email: email,
-        name: "Lucas Garcez",
+        userId: JWT.userId,
       });
     }, 1000);
   });
