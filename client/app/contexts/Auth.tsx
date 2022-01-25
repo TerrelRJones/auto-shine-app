@@ -16,8 +16,8 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  // const [authData, setAuthData] = useState<AuthData>();
-  const [authData, setAuthData] = useState(true);
+  const [authData, setAuthData] = useState<AuthData>();
+  // const [authData, setAuthData] = useState(true);
   // const [authData, setAuthData] = useState(false);
 
   //the AuthContext start with loading equals true
@@ -60,6 +60,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
     //Persist the data in the Async Storage
     //to be recovered in the next user session.
+    console.log(_authData);
     AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
   };
 

@@ -55,7 +55,7 @@ const LoginScreen = () => {
         <CustomButton
           title="Login"
           onPress={() => {
-            auth.signIn;
+            auth.signIn();
           }}
         />
         <CustomButtonSecondary title="Forgot Password" onPress={() => null} />

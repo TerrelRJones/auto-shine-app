@@ -5,7 +5,6 @@ import HomeScreen from "../screens/HomeScreen";
 import ServiceScreen from "../screens/ServiceScreen";
 
 import { HomeStackParams } from "../types";
-import { View } from "react-native";
 
 const Home = createNativeStackNavigator<HomeStackParams>();
 

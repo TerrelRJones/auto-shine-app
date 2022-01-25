@@ -6,13 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MdIcons from "@expo/vector-icons/MaterialIcons";
 import HomeStack from "./HomeStack";
 
-function ProfileScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+import ProfileScreen from "../screens/ProfileScreen";
+
 function OrderScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
