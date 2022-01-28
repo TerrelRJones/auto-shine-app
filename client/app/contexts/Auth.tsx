@@ -5,9 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthData, authService } from "../services/authService";
 
 type AuthContextData = {
-  authData?: AuthData;
+  authData: boolean;
   loading: boolean;
-  signIn(): Promise<void>;
+  signIn(email: string, password: string): Promise<void>;
   signOut(): void;
 };
 
@@ -16,7 +16,7 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [authData, setAuthData] = useState<AuthData>();
+  const [authData, setAuthData] = useState(false);
 
   //the AuthContext start with loading equals true
   //and stay like this, until the data be load from Async Storage
@@ -34,8 +34,8 @@ const AuthProvider: React.FC = ({ children }) => {
       const authDataSerialized = await AsyncStorage.getItem("@AuthData");
       if (authDataSerialized) {
         //If there are data, it's converted to an Object and the state is updated.
-        const _authData: AuthData = JSON.parse(authDataSerialized);
-        setAuthData(_authData);
+        // const _authData: AuthData = JSON.parse(authDataSerialized);
+        setAuthData(true);
       }
     } catch (error) {
     } finally {
@@ -51,18 +51,22 @@ const AuthProvider: React.FC = ({ children }) => {
 
     //Set the data in the context, so the App can be notified
     //and send the user to the AuthStack
-    setAuthData(_authData);
+    if (_authData.token) {
+      setAuthData(true);
+      AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
+      console.log(_authData);
+    } else {
+      console.log("Wrong email or password");
+    }
 
     //Persist the data in the Async Storage
     //to be recovered in the next user session.
-    console.log(_authData);
-    AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
   };
 
   const signOut = async () => {
     //Remove data from context, so the App can be notified
     //and send the user to the AuthStack
-    setAuthData(undefined);
+    setAuthData(false);
 
     //Remove the data from Async Storage
     //to NOT be recoverede in next session.

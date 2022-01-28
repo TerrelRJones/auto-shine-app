@@ -20,6 +20,23 @@ const RegistrationScreen = () => {
 
   const auth = useAuth();
 
+  const register = async () => {
+    const user = await fetch("http://localhost:4001/api/v1/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+        password2,
+      }),
+    });
+  };
+
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthStackParams>>();
 
@@ -73,7 +90,7 @@ const RegistrationScreen = () => {
           setValue={setPassword2}
           secureTextEntry
         />
-        <CustomButton title="Register" onPress={() => auth.signIn} />
+        <CustomButton title="Register" onPress={register} />
         <View style={{ flexDirection: "row", marginVertical: 5 }}>
           <Text style={{ fontWeight: "600" }}>Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>

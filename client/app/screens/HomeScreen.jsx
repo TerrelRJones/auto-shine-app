@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 
 const HomeScreen = () => {
   const [userData, setUserData] = useState();
+  const [token, setToken] = useState("");
   // Navigation //
   // const navigation =
   //   useNavigation<NativeStackNavigationProp<HomeStackParams>>();
@@ -36,10 +37,14 @@ const HomeScreen = () => {
   const _retrieveData = async () => {
     try {
       const data = await AsyncStorage.getItem("@AuthData");
-      if (data !== null) {
-        // console.log(JSON.parse(data));
-        setUserData(JSON.parse(data));
-      }
+      // const tokenOne = await JSON.parse(data);
+      // console.log(data);
+      setToken(JSON.parse(data));
+
+      // if (data !== null) {
+      //   // console.log(JSON.parse(data));
+      //   setUserData(JSON.parse(data));
+      // }
     } catch (e) {
       console.log("error retrieving data");
     }
@@ -47,10 +52,15 @@ const HomeScreen = () => {
 
   const getUserInfo = async () => {
     const user = await fetch(
-      `http://localhost:4001/api/v1/user/0b92bd22-0f6b-4a37-813b-23ae561fa64e`
+      `http://localhost:4001/api/v1/user/${token.userId}`,
+      {
+        method: "GET",
+        headers: { token: token.token },
+      }
     );
-    const data = await user.json();
-    console.log(data);
+
+    const res = await user.json();
+    setUserData(res);
   };
 
   useEffect(() => {
@@ -60,7 +70,11 @@ const HomeScreen = () => {
 
   return (
     <>
-      <Title title="Terrel" />
+      <Title
+        title={
+          userData ? `Hello, ${userData.firstName}!` : "Hello, AutoShiner!"
+        }
+      />
 
       <View>
         <Text

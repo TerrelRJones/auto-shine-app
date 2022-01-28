@@ -1,6 +1,5 @@
 export type AuthData = {
   token: string;
-  email: string;
   userId: string;
 };
 const signIn = async (email: string, password: string): Promise<AuthData> => {
@@ -17,13 +16,15 @@ const signIn = async (email: string, password: string): Promise<AuthData> => {
   });
 
   const JWT = await user.json();
+
+  if (!JWT.token) {
+  }
   // console.log(JWT);
 
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         token: JWT.token,
-        email: email,
         userId: JWT.userId,
       });
     }, 1000);

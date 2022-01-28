@@ -2,26 +2,28 @@ import { Router, Request, Response } from "express";
 const router: Router = Router();
 
 import prisma from "../client";
-
+const auth = require("../middleware/authorization");
 // GET USERS with Vehicles attached
-router.get("/user/:id", async (req: Request<{ id: string }>, res: Response) => {
-  const { id } = req.params;
 
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-      include: {
-        vehicle: true,
-      },
-    });
+router.get(
+  "/user/:userId",
+  auth,
+  async (req: Request<{ userId: string }>, res: Response) => {
+    const { userId } = req.params;
 
-    return res.send(200).json(user);
-  } catch (error) {
-    console.error();
-    return res.send(`user ${id} has not been found`);
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+          vehicle: true,
+        },
+      });
+
+      return res.json(user);
+    } catch (error) {
+      console.error();
+    }
   }
-});
+);
 
 module.exports = router;

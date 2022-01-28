@@ -10,8 +10,8 @@ const Auth = createNativeStackNavigator<AuthStackParams>();
 const AuthStackScreen = () => {
   return (
     <Auth.Navigator screenOptions={{ headerShown: false }}>
-      <Auth.Screen name="Registration" component={RegistrationScreen} />
       <Auth.Screen name="Login" component={LoginScreen} />
+      <Auth.Screen name="Registration" component={RegistrationScreen} />
     </Auth.Navigator>
   );
 };
