@@ -20,11 +20,7 @@ app.use(morgan("dev"));
 
 // ENDPOINTS
 app.get("/", (req: Request, res: Response) => {
-  res
-    .json({
-      name: "Hello Rell",
-    })
-    .sendStatus(200);
+  res.send("Welcome To Auto-Shine API");
 });
 
 // Routes
