@@ -7,7 +7,7 @@ const auth = require("../middleware/authorization");
 
 router.get(
   "/user/:userId",
-  auth,
+  // auth,
   async (req: Request<{ userId: string }>, res: Response) => {
     const { userId } = req.params;
 
@@ -16,9 +16,9 @@ router.get(
         where: { id: userId },
         include: {
           vehicle: true,
+          address: true,
         },
       });
-
       return res.json(user);
     } catch (error) {
       console.error();

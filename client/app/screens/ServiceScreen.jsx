@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Pressable,
   StyleSheet,
-  KeyboardAvoidingView,
   Text,
   View,
   FlatList,
@@ -22,6 +21,9 @@ import serviceData from "../data/service";
 import { dateData } from "../data/dateData";
 import { serviceTimeData } from "../data/serviceTimesData";
 
+import { useAuth } from "../contexts/Auth";
+import { Loading } from "../components/Loading";
+
 const vehicles = ["2019 Chevy Malibu", "2010 Ford Ranger"];
 const address = ["2412 100th St Ct E", "2043 Silicon Ln"];
 
@@ -30,14 +32,48 @@ const address = ["2412 100th St Ct E", "2043 Silicon Ln"];
 // }
 
 const ServiceScreen = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState([]);
+  const [userId, setUserId] = useState();
+  const [token, setToken] = useState();
   const navigation = useNavigation();
   const route = useRoute();
+  const auth = useAuth();
 
   const service = serviceData.find(
     (item) => item.id === route.params.serviceId
   );
-  // console.log(route.params);
+  const getUserId = () => {
+    const userId = route.params.userId;
+    setUserId(userId.userId);
+    setToken(userId.token);
+    console.log(userId.userId);
+    console.log(userId.token);
+  };
 
+  const getUserInfo = async () => {
+    const user = await fetch(
+      `http://localhost:4001/api/v1/user/${auth.authData.userId}`,
+      {
+        method: "GET",
+        headers: { token: auth.authData.token },
+      }
+    );
+
+    const res = await user.json();
+    console.log(res.vehicle);
+    setUserData(res);
+  };
+
+  useEffect(async () => {
+    await getUserInfo();
+    // getUserId();
+  }, []);
+
+  if (userData.length === 0) {
+    return <Loading />;
+  }
+  // console.log(route.params);
   return (
     <View>
       <View style={styles.styleContainer}>
@@ -103,20 +139,25 @@ const ServiceScreen = () => {
             fontSize: 20,
             fontWeight: "700",
           }}
-          defaultValueByIndex={0}
-          data={vehicles}
+          defaultButtonText="Select Vehicle"
+          data={userData.vehicle}
+          // data={vehicles}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
+            let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
+
+            console.log(car, index);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
+            let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
             // text represented after item is selected
             // if data array is an array of objects then return selectedItem.property to render after item is selected
-            return selectedItem;
+            return car;
           }}
           rowTextForSelection={(item, index) => {
+            let car = `${item.year} ${item.make} ${item.model}`;
             // text represented for each item in dropdown
             // if data array is an array of objects then return item.property to represent item in dropdown
-            return item;
+            return car;
           }}
         />
       </View>
@@ -133,20 +174,20 @@ const ServiceScreen = () => {
             fontSize: 20,
             fontWeight: "700",
           }}
-          defaultValueByIndex={0}
-          data={address}
+          defaultButtonText="Select Address"
+          data={userData.address}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             // text represented after item is selected
             // if data array is an array of objects then return selectedItem.property to render after item is selected
-            return selectedItem;
+            return selectedItem.street;
           }}
           rowTextForSelection={(item, index) => {
             // text represented for each item in dropdown
             // if data array is an array of objects then return item.property to represent item in dropdown
-            return item;
+            return item.street;
           }}
         />
       </View>

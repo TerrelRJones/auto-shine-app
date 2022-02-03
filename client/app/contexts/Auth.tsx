@@ -5,7 +5,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthData, authService } from "../services/authService";
 
 type AuthContextData = {
-  authData: boolean;
+  authData?: AuthData;
+  // userData: AuthData;
   loading: boolean;
   signIn(email: string, password: string): Promise<void>;
   signOut(): void;
@@ -16,7 +17,8 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [authData, setAuthData] = useState(false);
+  const [authData, setAuthData] = useState<AuthData>();
+  // const [userData, setUserData] = useState("");
 
   //the AuthContext start with loading equals true
   //and stay like this, until the data be load from Async Storage
@@ -34,8 +36,9 @@ const AuthProvider: React.FC = ({ children }) => {
       const authDataSerialized = await AsyncStorage.getItem("@AuthData");
       if (authDataSerialized) {
         //If there are data, it's converted to an Object and the state is updated.
-        // const _authData: AuthData = JSON.parse(authDataSerialized);
-        setAuthData(true);
+        const _authData: AuthData = JSON.parse(authDataSerialized);
+        // setAuthData(true);
+        setAuthData(_authData);
       }
     } catch (error) {
     } finally {
@@ -47,12 +50,14 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = async (email: string, password: string) => {
     //call the service passing credential (email and password).
     //In a real App this data will be provided by the user from some InputText components.
+    // const _authData = await authService.signIn(email, password);
     const _authData = await authService.signIn(email, password);
-
     //Set the data in the context, so the App can be notified
     //and send the user to the AuthStack
     if (_authData.token) {
-      setAuthData(true);
+      // setAuthData(true);
+      setAuthData(_authData);
+      // setUserData(_authData.userId);
       AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
       console.log(_authData);
     } else {
@@ -66,7 +71,8 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = async () => {
     //Remove data from context, so the App can be notified
     //and send the user to the AuthStack
-    setAuthData(false);
+    // setAuthData(false);
+    setAuthData(undefined);
 
     //Remove the data from Async Storage
     //to NOT be recoverede in next session.

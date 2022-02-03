@@ -16,10 +16,14 @@ import Title from "../components/Title";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/Auth";
+import { Loading } from "../components/Loading";
 
 const HomeScreen = () => {
-  const [userData, setUserData] = useState();
+  const [userName, setUserName] = useState();
   const [token, setToken] = useState("");
+  const auth = useAuth();
+
   // Navigation //
   // const navigation =
   //   useNavigation<NativeStackNavigationProp<HomeStackParams>>();
@@ -31,6 +35,8 @@ const HomeScreen = () => {
     // fix props for navigate
     navigation.navigate("Service", {
       serviceId: serviceId,
+      userId: token,
+      // token: token.token,
     });
   };
 
@@ -40,11 +46,6 @@ const HomeScreen = () => {
       // const tokenOne = await JSON.parse(data);
       // console.log(data);
       setToken(JSON.parse(data));
-
-      // if (data !== null) {
-      //   // console.log(JSON.parse(data));
-      //   setUserData(JSON.parse(data));
-      // }
     } catch (e) {
       console.log("error retrieving data");
     }
@@ -52,29 +53,29 @@ const HomeScreen = () => {
 
   const getUserInfo = async () => {
     const user = await fetch(
-      `http://localhost:4001/api/v1/user/${token.userId}`,
+      `http://localhost:4001/api/v1/user/${auth.authData.userId}`,
       {
         method: "GET",
-        headers: { token: token.token },
+        headers: { token: auth.authData.token },
       }
     );
 
     const res = await user.json();
-    setUserData(res);
+    setUserName(res.firstName);
   };
 
   useEffect(() => {
-    _retrieveData();
     getUserInfo();
+    _retrieveData();
   }, []);
+
+  if (!userName) {
+    return <Loading />;
+  }
 
   return (
     <>
-      <Title
-        title={
-          userData ? `Hello, ${userData.firstName}!` : "Hello, AutoShiner!"
-        }
-      />
+      <Title title={`Hello, ${userName}!`} />
 
       <View>
         <Text

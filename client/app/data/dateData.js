@@ -1,6 +1,6 @@
 const date = new Date();
 
-const month = ["Jan"];
+const month = ["Jan", "Feb", "March"];
 
 const day = [
   "Sunday",
