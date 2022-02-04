@@ -1,5 +1,5 @@
 ### Overview
-Auto-Shine is a mobile application that allows users to book a moibile carwash and or detail. Auto-Shine is Uber, Doordash for car washing, and or detailing. A user can simply open the app, see what is available and schedule an appointment.
+Auto-Shine is a mobile application that allows users to book a mobile carwash and or detail. Auto-Shine is Uber, Doordash for car washing, and or detailing. A user can simply open the app, see what is available and schedule an appointment.
 
 
 ### Features
