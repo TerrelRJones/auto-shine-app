@@ -35,28 +35,19 @@ const HomeScreen = () => {
     // fix props for navigate
     navigation.navigate("Service", {
       serviceId: serviceId,
-      userId: token,
-      // token: token.token,
     });
-  };
-
-  const _retrieveData = async () => {
-    try {
-      const data = await AsyncStorage.getItem("@AuthData");
-      // const tokenOne = await JSON.parse(data);
-      // console.log(data);
-      setToken(JSON.parse(data));
-    } catch (e) {
-      console.log("error retrieving data");
-    }
   };
 
   const getUserInfo = async () => {
     const user = await fetch(
-      `http://localhost:4001/api/v1/user/${auth.authData.userId}`,
+      `${auth.BASE_URL}api/v1/user/${auth.authData.userId}`,
       {
         method: "GET",
-        headers: { token: auth.authData.token },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          token: auth.authData.token,
+        },
       }
     );
 
@@ -66,7 +57,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getUserInfo();
-    _retrieveData();
   }, []);
 
   if (!userName) {
