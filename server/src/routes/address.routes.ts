@@ -7,7 +7,6 @@ import prisma from "../client";
 router.post("/createAddress", async (req: Request<Address>, res: Response) => {
   const { state, city, street, addressId } = req.body;
   const zip = parseInt(req.body);
-  console.log(zip);
 
   const address = await prisma.address.create({
     data: {

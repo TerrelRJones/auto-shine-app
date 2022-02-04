@@ -1,6 +1,7 @@
+import { Request, Response, NextFunction } from "express";
 const jwt = require("jsonwebtoken");
 
-module.exports = async (req, res, next) => {
+module.exports = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.header("token");
     // const token = authHeader.split(" ")[1];
@@ -13,7 +14,7 @@ module.exports = async (req, res, next) => {
 
     const payload = jwt.verify(token, "SecretSauce");
 
-    req.user = payload.user;
+    req = payload.user;
 
     console.log("Authorized");
   } catch (error) {
