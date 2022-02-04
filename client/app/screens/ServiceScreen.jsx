@@ -99,7 +99,10 @@ const ServiceScreen = () => {
             showsHorizontalScrollIndicator={false}
             data={dateData}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.datesBtnContainer}>
+              <TouchableOpacity
+                style={styles.datesBtnContainer}
+                onPress={() => console.log(item.title, item.day)}
+              >
                 <Text style={styles.datesTitle}>{item.title}</Text>
                 <Text style={styles.datesDate}>{item.day}</Text>
               </TouchableOpacity>
@@ -117,7 +120,10 @@ const ServiceScreen = () => {
             showsHorizontalScrollIndicator={false}
             data={serviceTimeData}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.datesBtnContainer}>
+              <TouchableOpacity
+                style={styles.datesBtnContainer}
+                onPress={() => console.log(item.time)}
+              >
                 <Text style={styles.datesDate}>{item.time}</Text>
               </TouchableOpacity>
             )}
@@ -177,7 +183,7 @@ const ServiceScreen = () => {
           defaultButtonText="Select Address"
           data={userData.address}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
+            console.log(selectedItem.street, index);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             // text represented after item is selected
