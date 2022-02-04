@@ -10,6 +10,7 @@ type AuthContextData = {
   loading: boolean;
   signIn(email: string, password: string): Promise<void>;
   signOut(): void;
+  BASE_URL: string;
 };
 
 //Create the Auth Context with the data type specified
@@ -17,6 +18,8 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
+  const BASE_URL = "https://auto-shine-app.herokuapp.com/";
+
   const [authData, setAuthData] = useState<AuthData>();
   // const [userData, setUserData] = useState("");
 
@@ -54,7 +57,7 @@ const AuthProvider: React.FC = ({ children }) => {
     const _authData = await authService.signIn(email, password);
     //Set the data in the context, so the App can be notified
     //and send the user to the AuthStack
-    if (_authData.token) {
+    if (_authData.userId) {
       // setAuthData(true);
       setAuthData(_authData);
       // setUserData(_authData.userId);
@@ -82,7 +85,9 @@ const AuthProvider: React.FC = ({ children }) => {
   return (
     //This component will be used to encapsulate the whole App,
     //so all components will have access to the Context
-    <AuthContext.Provider value={{ authData, loading, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ authData, loading, signIn, signOut, BASE_URL }}
+    >
       {children}
     </AuthContext.Provider>
   );
