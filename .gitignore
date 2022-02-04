@@ -1,7 +1,6 @@
 
 # Keep environment variables out of version control
 .env
-src/.env
 
 /dist/
 Docs
@@ -20,3 +19,8 @@ Docs
 
 /client/# macOS
 /client/.DS_Store
+
+/server/node_modules
+/server/.env
+/server/src/.env
+/server/dist
