@@ -2,8 +2,10 @@ export type AuthData = {
   token: string;
   userId: string;
 };
+const BASE_URL: string = "https://auto-shine-app.herokuapp.com/";
+
 const signIn = async (email: string, password: string): Promise<AuthData> => {
-  const user = await fetch("http://localhost:4001/api/v1/login", {
+  const user = await fetch(`${BASE_URL}api/v1/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",
