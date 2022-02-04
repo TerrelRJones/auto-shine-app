@@ -53,7 +53,7 @@ const ServiceScreen = () => {
 
   const getUserInfo = async () => {
     const user = await fetch(
-      `http://localhost:4001/api/v1/user/${auth.authData.userId}`,
+      `${auth.BASE_URL}api/v1/user/${auth.authData.userId}`,
       {
         method: "GET",
         headers: { token: auth.authData.token },

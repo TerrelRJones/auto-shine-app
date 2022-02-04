@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "client",
+    "name": "AutoShine",
     "slug": "client",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
