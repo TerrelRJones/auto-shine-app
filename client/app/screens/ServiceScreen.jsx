@@ -24,18 +24,17 @@ import { serviceTimeData } from "../data/serviceTimesData";
 import { useAuth } from "../contexts/Auth";
 import { Loading } from "../components/Loading";
 
-const vehicles = ["2019 Chevy Malibu", "2010 Ford Ranger"];
-const address = ["2412 100th St Ct E", "2043 Silicon Ln"];
-
-// interface User {
-//   firstName: string;
-// }
-
 const ServiceScreen = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState([]);
-  const [userId, setUserId] = useState();
-  const [token, setToken] = useState();
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [appointmentTime, setAppointmentTime] = useState("");
+  const [appointmentVehicle, setAppointmentVehicle] = useState("");
+  const [appointmentAddress, setAppointmentAddress] = useState("");
+  const [appointmentComment, setAppointmentComment] = useState("");
+
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedIdTime, setSelectedIdTime] = useState(null);
+
   const navigation = useNavigation();
   const route = useRoute();
   const auth = useAuth();
@@ -43,12 +42,17 @@ const ServiceScreen = () => {
   const service = serviceData.find(
     (item) => item.id === route.params.serviceId
   );
-  const getUserId = () => {
-    const userId = route.params.userId;
-    setUserId(userId.userId);
-    setToken(userId.token);
-    console.log(userId.userId);
-    console.log(userId.token);
+
+  const paymentScreenNavigate = () => {
+    navigation.navigate("Payment", {
+      serviceId: service.id,
+      serviceTitle: service.product,
+      price: service.price,
+      date: appointmentDate,
+      time: appointmentTime,
+      vehicle: appointmentVehicle,
+      address: appointmentAddress,
+    });
   };
 
   const getUserInfo = async () => {
@@ -64,16 +68,68 @@ const ServiceScreen = () => {
     console.log(res.vehicle);
     setUserData(res);
   };
+  const SelectedBlurb = ({ item, onPress, backgroundColor, textColor }) => {
+    return (
+      <>
+        <TouchableOpacity
+          onPress={onPress}
+          style={[styles.datesBtnContainer, backgroundColor]}
+        >
+          <Text style={[styles.datesTitle, textColor]}>{item.title}</Text>
+          <Text style={[styles.datesDate, textColor]}>{item.day}</Text>
+        </TouchableOpacity>
+      </>
+    );
+  };
 
-  useEffect(async () => {
-    await getUserInfo();
+  const renderItemDate = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? "#2C9BF0" : "#000";
+    const color = item.id === selectedId ? "white" : "white";
+
+    return (
+      <SelectedBlurb
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+        backgroundColor={{ backgroundColor }}
+        textColor={{ color }}
+      />
+    );
+  };
+
+  const SelectedTimeBlurb = ({ item, onPress, backgroundColor }) => {
+    return (
+      <>
+        <TouchableOpacity
+          style={[styles.datesBtnContainer, backgroundColor]}
+          onPress={onPress}
+        >
+          <Text style={styles.datesDate}>{item.time}</Text>
+        </TouchableOpacity>
+      </>
+    );
+  };
+
+  const renderItemTime = ({ item }) => {
+    const backgroundColor = item.id === selectedIdTime ? "#2C9BF0" : "#000";
+    // const color = item.id === selectedId ? "white" : "white";
+    return (
+      <SelectedTimeBlurb
+        item={item}
+        onPress={() => setSelectedIdTime(item.id)}
+        backgroundColor={{ backgroundColor }}
+      />
+    );
+  };
+
+  useEffect(() => {
+    getUserInfo();
     // getUserId();
   }, []);
 
   if (userData.length === 0) {
     return <Loading />;
   }
-  // console.log(route.params);
+
   return (
     <View>
       <View style={styles.styleContainer}>
@@ -98,16 +154,9 @@ const ServiceScreen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={dateData}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.datesBtnContainer}
-                onPress={() => console.log(item.title, item.day)}
-              >
-                <Text style={styles.datesTitle}>{item.title}</Text>
-                <Text style={styles.datesDate}>{item.day}</Text>
-              </TouchableOpacity>
-            )}
+            renderItem={renderItemDate}
             keyExtractor={(item) => item.id}
+            extraData={selectedId}
           />
         </View>
       </View>
@@ -119,15 +168,9 @@ const ServiceScreen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={serviceTimeData}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.datesBtnContainer}
-                onPress={() => console.log(item.time)}
-              >
-                <Text style={styles.datesDate}>{item.time}</Text>
-              </TouchableOpacity>
-            )}
+            renderItem={renderItemTime}
             keyExtractor={(item) => item.id}
+            extraData={selectedIdTime}
           />
         </View>
       </View>
@@ -150,6 +193,7 @@ const ServiceScreen = () => {
           // data={vehicles}
           onSelect={(selectedItem, index) => {
             let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
+            setAppointmentVehicle(car);
 
             console.log(car, index);
           }}
@@ -183,7 +227,8 @@ const ServiceScreen = () => {
           defaultButtonText="Select Address"
           data={userData.address}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem.street, index);
+            const address = `${selectedItem.street} ${selectedItem.city}, ${selectedItem.state} ${selectedItem.zip}`;
+            setAppointmentAddress(address);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             // text represented after item is selected
@@ -202,7 +247,7 @@ const ServiceScreen = () => {
         style={styles.input}
         placeholder="Don't want your tires shined? Let us know here!"
       />
-      <CustomButton title="CONFIRM" onPress={() => console.log("Pressed")} />
+      <CustomButton title="CONFIRM" onPress={paymentScreenNavigate} />
     </View>
   );
 };
@@ -239,11 +284,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: "#2C9BF0",
-    backgroundColor: "black",
   },
   datesTitle: {
-    color: "white",
     fontWeight: "700",
   },
   datesDate: {
