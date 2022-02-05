@@ -21,7 +21,7 @@ import { Loading } from "../components/Loading";
 
 const HomeScreen = () => {
   const [userName, setUserName] = useState();
-  const [token, setToken] = useState("");
+
   const auth = useAuth();
 
   // Navigation //
@@ -52,7 +52,7 @@ const HomeScreen = () => {
     );
 
     const res = await user.json();
-    setUserName(res.firstName);
+    setUserName(res);
   };
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <Title title={`Hello, ${userName}!`} />
+      <Title title={`Hello, ${userName.firstName}!`} />
 
       <View>
         <Text
@@ -84,7 +84,7 @@ const HomeScreen = () => {
             color: "gray",
           }}
         >
-          Tacoma, Wa
+          {`${userName.address[0].city}, ${userName.address[0].state}`}
         </Text>
       </View>
       <Text
