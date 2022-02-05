@@ -28,6 +28,6 @@ app.use("/api/v1", userRegister);
 app.use("/api/v1", userLogin);
 app.use("/api/v1", vehicle);
 app.use("/api/v1", users);
-app.use("api/v1", address);
+app.use("/api/v1", address);
 
 module.exports = app;
