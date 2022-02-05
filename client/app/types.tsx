@@ -7,4 +7,5 @@ export type HomeStackParams = {
   HomeStack: undefined;
   Service: undefined;
   Profile: { serviceId: string };
+  Payment: undefined;
 };
