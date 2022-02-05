@@ -1,12 +1,50 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  FlatList,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+
+import React, { useEffect, useState } from "react";
 import CustomButton from "../components/CustomButton";
 import Title from "../components/Title";
 
 import { useAuth } from "../contexts/Auth";
+import { Loading } from "../components/Loading";
 
 const ProfileScreen = () => {
+  const [userData, setUserData] = useState();
+  const [vehicleData, setVehicleData] = useState([]);
+
   const auth = useAuth();
+
+  const getUserInfo = async () => {
+    const user = await fetch(
+      `${auth.BASE_URL}api/v1/user/${auth.authData.userId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          token: auth.authData.token,
+        },
+      }
+    );
+
+    const res = await user.json();
+    setUserData(res);
+    setVehicleData(res.vehicle);
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  if (!userData) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -22,7 +60,7 @@ const ProfileScreen = () => {
           <Text style={styles.btn}>Edit</Text>
         </Pressable>
       </View>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <View
           style={{
             alignItems: "center",
@@ -32,25 +70,50 @@ const ProfileScreen = () => {
           }}
         >
           <View style={styles.photo}></View>
-          <Text style={styles.profileName}>Terrel Jones</Text>
-          <Text style={styles.locationTitle}>Tacoma, Wa</Text>
+          <Text
+            style={styles.profileName}
+          >{`${userData.firstName} ${userData.lastName}`}</Text>
+          <Text style={styles.locationTitle}>
+            {`${userData.address[0].city}, ${userData.address[0].state}`}
+          </Text>
         </View>
 
         <View style={{ marginVertical: 15 }}>
           <Text style={styles.infoTitle}>Personal Info</Text>
           <Text style={styles.infoSubTitle}>email</Text>
-          <Text style={styles.infoSubTitleData}>terrel@autoshineapp.com</Text>
+          <Text style={styles.infoSubTitleData}>{`${userData.email}`}</Text>
           <Text style={styles.infoSubTitle}>phone</Text>
           <Text style={styles.infoSubTitleData}>123-456-7890</Text>
         </View>
         <View style={{ marginVertical: 15 }}>
           <Text style={styles.infoTitle}>Address</Text>
           <Text style={styles.infoSubTitle}>zip code</Text>
-          <Text style={styles.infoSubTitleData}>98409</Text>
+          <Text
+            style={styles.infoSubTitleData}
+          >{`${userData.address[0].zip}`}</Text>
           <Text style={styles.infoSubTitle}>addresss 1</Text>
-          <Text style={styles.infoSubTitleData}>2411 100th St Ct E</Text>
+          <Text
+            style={styles.infoSubTitleData}
+          >{`${userData.address[0].street}`}</Text>
           <Text style={styles.infoSubTitle}>address 2</Text>
           <Text style={styles.infoSubTitleData}>#23D</Text>
+        </View>
+
+        <View style={{ marginVertical: 15 }}>
+          <Text style={styles.infoTitle}>Vehicle</Text>
+          <FlatList
+            scrollEnabled={false}
+            data={vehicleData}
+            renderItem={({ item }) => (
+              <>
+                <Text style={styles.infoSubTitle}>1</Text>
+                <Text style={styles.infoSubTitleData}>
+                  {item.year} {item.make} {item.model}
+                </Text>
+              </>
+            )}
+            keyExtractor={(item) => item.id}
+          />
         </View>
       </ScrollView>
 

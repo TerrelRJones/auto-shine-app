@@ -3,6 +3,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import ServiceScreen from "../screens/ServiceScreen";
+import PaymentScreen from "../screens/PaymentScreen";
 
 import { HomeStackParams } from "../types";
 
@@ -13,6 +14,7 @@ const HomeStack = () => {
     <Home.Navigator screenOptions={{ headerShown: false }}>
       <Home.Screen name="HomeStack" component={HomeScreen} />
       <Home.Screen name="Service" component={ServiceScreen} />
+      <Home.Screen name="Payment" component={PaymentScreen} />
     </Home.Navigator>
   );
 };
