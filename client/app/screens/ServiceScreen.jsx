@@ -29,6 +29,7 @@ const ServiceScreen = () => {
   const [appointmentDate, setAppointmentDate] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
   const [appointmentVehicle, setAppointmentVehicle] = useState("");
+  const [carId, setCarId] = useState("");
   const [appointmentAddress, setAppointmentAddress] = useState("");
   const [appointmentComment, setAppointmentComment] = useState("");
 
@@ -51,6 +52,7 @@ const ServiceScreen = () => {
       date: appointmentDate,
       time: appointmentTime,
       vehicle: appointmentVehicle,
+      vehicleId: carId,
       address: appointmentAddress,
     });
   };
@@ -131,7 +133,7 @@ const ServiceScreen = () => {
   }
 
   return (
-    <View>
+    <View style={{ backgroundColor: "white", flex: 1 }}>
       <View style={styles.styleContainer}>
         <Pressable onPress={() => navigation.goBack()} style={styles.btn}>
           <Fontisto name="angle-dobule-left" size={24} />
@@ -194,8 +196,9 @@ const ServiceScreen = () => {
           onSelect={(selectedItem, index) => {
             let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
             setAppointmentVehicle(car);
+            setCarId(selectedItem.id);
 
-            console.log(car, index);
+            console.log(car);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
