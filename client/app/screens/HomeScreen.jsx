@@ -11,9 +11,10 @@ import {
   Image,
 } from "react-native";
 
+import { color } from "../components/colors";
+
 import serviceData from "../data/service";
 import Title from "../components/Title";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/Auth";
@@ -64,7 +65,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       <Title title={`Hello, ${userName.firstName}!`} />
 
       <View>
@@ -96,33 +97,31 @@ const HomeScreen = () => {
       >
         Services
       </Text>
-      <View style={styles.container}>
-        <FlatList
-          data={serviceData}
-          horizontal={false}
-          numColumns={2}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => serviceScreenNavigate(item.id)}>
-              <View style={styles.serviceContainer}>
-                <View
-                  style={{
-                    width: 100,
-                    height: 100,
-                  }}
-                >
-                  <Image
-                    style={{ width: "100%", height: "100%" }}
-                    source={item.img}
-                  />
-                </View>
-                <Text style={styles.serviceText}>{item.product}</Text>
+      <FlatList
+        data={serviceData}
+        horizontal={false}
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => serviceScreenNavigate(item.id)}>
+            <View style={styles.serviceContainer}>
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                }}
+              >
+                <Image
+                  style={{ width: "100%", height: "100%" }}
+                  source={item.img}
+                />
               </View>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-    </>
+              <Text style={styles.serviceText}>{item.product}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 };
 
@@ -130,11 +129,12 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingVertical: 5,
     backgroundColor: "white",
   },
   serviceContainer: {
-    backgroundColor: "whitesmoke",
+    backgroundColor: `${color.whiteSmoke}`,
     width: 150,
     height: 150,
     borderRadius: 10,
