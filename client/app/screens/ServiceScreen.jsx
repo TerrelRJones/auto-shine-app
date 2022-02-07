@@ -154,6 +154,7 @@ const ServiceScreen = () => {
         <View>
           <FlatList
             horizontal
+            pagingEnabled
             showsHorizontalScrollIndicator={false}
             data={dateData}
             renderItem={renderItemDate}
@@ -168,6 +169,7 @@ const ServiceScreen = () => {
         <View>
           <FlatList
             horizontal
+            pagingEnabled
             showsHorizontalScrollIndicator={false}
             data={serviceTimeData}
             renderItem={renderItemTime}

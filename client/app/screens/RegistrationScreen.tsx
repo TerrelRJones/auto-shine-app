@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { AuthStackParams } from "../types";
 
 import CustomButton from "../components/CustomButton";
@@ -18,42 +24,16 @@ const RegistrationScreen = () => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const auth = useAuth();
+  const [loading, isLoading] = useState(false);
 
-  const register = async () => {
-    const user = await fetch("http://localhost:4001/api/v1/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        password2,
-      }),
-    });
-  };
+  const auth = useAuth();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthStackParams>>();
 
   const submitCredintials = async () => {
-    const user = await fetch("http://localhost:4001/api/v1/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-
-    console.log(user);
+    isLoading(true);
+    await auth.register(firstName, lastName, email, password, password2);
   };
 
   return (
@@ -90,7 +70,11 @@ const RegistrationScreen = () => {
           setValue={setPassword2}
           secureTextEntry
         />
-        <CustomButton title="Register" onPress={register} />
+        {loading ? (
+          <ActivityIndicator color={"#000"} animating={true} size="small" />
+        ) : (
+          <CustomButton title="Register" onPress={submitCredintials} />
+        )}
         <View style={{ flexDirection: "row", marginVertical: 5 }}>
           <Text style={{ fontWeight: "600" }}>Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>

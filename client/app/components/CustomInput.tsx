@@ -12,6 +12,7 @@ const Input = ({ placeholder, value, setValue, secureTextEntry }: Props) => {
   return (
     <View style={styles.container}>
       <TextInput
+        autoCapitalize="none"
         style={styles.input}
         placeholder={placeholder}
         value={value}

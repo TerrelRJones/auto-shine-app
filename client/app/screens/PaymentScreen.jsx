@@ -4,7 +4,7 @@ import { Fontisto } from "@expo/vector-icons/";
 
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import { CardField } from "@stripe/stripe-react-native";
+import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
 
 import { color } from "../components/colors";
 
@@ -13,9 +13,12 @@ import Title from "../components/Title";
 import SmallTextTitle from "../components/SmallTextTitle";
 import ServicesRow from "../components/ServicesRow";
 
+const API_URL = "http://localhost:4001/api/v1";
+
 const PaymentScreen = () => {
   const [email, setEmail] = useState();
   const [cardDetails, setCardDetails] = useState();
+  const { confirmPayment, loading } = useConfirmPayment();
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -29,20 +32,73 @@ const PaymentScreen = () => {
   const vehicleId = route.params.vehicleId;
   const address = route.params.address;
 
-  const confirmAppointment = async () => {
-    const user = await fetch(`http://localhost:4001/api/v1/createAppointment`, {
+  const fetchPaymentIntentClientSecret = async () => {
+    const res = await fetch(`${API_URL}/create-payment-intent`, {
       method: "POST",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        date: new Date(`2022-02-11T15:30:00+0200`),
-        address: address,
-        type: serviceTitle,
-        vehicleId: vehicleId,
+        price: `${servicePrice}00`,
       }),
     });
+    const { clientSecret, error } = await res.json();
+    return { clientSecret, error };
+  };
+
+  const confirmAppointment = async () => {
+    if (!cardDetails?.complete || !email) {
+      alert("Please enter complete card details and email");
+      return;
+    }
+
+    const billingDetails = {
+      email: email,
+    };
+
+    try {
+      const { clientSecret, error } = await fetchPaymentIntentClientSecret();
+      //2. confimr payment
+      if (error) {
+        console.log(error);
+      } else {
+        const { paymentIntent, error } = await confirmPayment(clientSecret, {
+          type: "Card",
+          billingDetails: billingDetails,
+        });
+        if (error) {
+          alert(`Payment confirmation error ${error.message}`);
+        } else if (paymentIntent) {
+          navigation.navigate("Confirmation");
+          // alert("Payment Successful", [
+          //   { text: "OK", onPress: navigation.navigate("HomeStack") },
+          // ]);
+
+          // Setting users appoint into database
+          // const user = await fetch(
+          //   `http://localhost:4001/api/v1/createAppointment`,
+          //   {
+          //     method: "POST",
+          //     headers: {
+          //       Accept: "application/json",
+          //       "Content-Type": "application/json",
+          //     },
+          //     body: JSON.stringify({
+          //       date: new Date(`2022-02-11T15:30:00+0200`),
+          //       address: address,
+          //       type: serviceTitle,
+          //       vehicleId: vehicleId,
+          //     }),
+          //   }
+          // );
+          // const res = await user.json();
+          // console.log(res);
+          console.log("Payment successful", paymentIntent);
+        }
+      }
+    } catch (e) {
+      console.log(e + " " + "The end");
+    }
   };
 
   return (
@@ -84,7 +140,6 @@ const PaymentScreen = () => {
 
           {/* ADDRESS  */}
           <ServicesRow title="Address" text={address} />
-          <Text>{vehicleId}</Text>
         </View>
         <CustomInput
           placeholder="email"
@@ -108,7 +163,11 @@ const PaymentScreen = () => {
           <Text style={{ fontWeight: "bold" }}>Powered by Stripe!</Text>
         </View>
       </View>
-      <CustomButton title="Pay" onPress={confirmAppointment} />
+      <CustomButton
+        title="Pay"
+        onPress={confirmAppointment}
+        disabled={loading}
+      />
     </View>
   );
 };

@@ -33,6 +33,45 @@ const signIn = async (email: string, password: string): Promise<AuthData> => {
   });
 };
 
+const register = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  password2: string
+): Promise<AuthData> => {
+  const user = await fetch("http://localhost:4001/api/v1/register", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      password,
+      password2,
+    }),
+  });
+
+  const JWT = await user.json();
+
+  if (!JWT.token) {
+  }
+  // console.log(JWT);
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        token: JWT.token,
+        userId: JWT.userId,
+      });
+    }, 1000);
+  });
+};
+
 export const authService = {
   signIn,
+  register,
 };

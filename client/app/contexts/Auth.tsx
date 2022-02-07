@@ -6,9 +6,15 @@ import { AuthData, authService } from "../services/authService";
 
 type AuthContextData = {
   authData?: AuthData;
-  // userData: AuthData;
   loading: boolean;
   signIn(email: string, password: string): Promise<void>;
+  register(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    password2: string
+  ): Promise<void>;
   signOut(): void;
   BASE_URL: string;
 };
@@ -71,6 +77,41 @@ const AuthProvider: React.FC = ({ children }) => {
     //to be recovered in the next user session.
   };
 
+  interface User {}
+
+  const register = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    password2: string
+  ) => {
+    //call the service passing credential (email and password).
+    //In a real App this data will be provided by the user from some InputText components.
+    // const _authData = await authService.signIn(email, password);
+    const _authData = await authService.register(
+      firstName,
+      lastName,
+      email,
+      password,
+      password2
+    );
+    //Set the data in the context, so the App can be notified
+    //and send the user to the AuthStack
+    if (_authData.userId) {
+      // setAuthData(true);
+      setAuthData(_authData);
+      // setUserData(_authData.userId);
+      AsyncStorage.setItem("@AuthData", JSON.stringify(_authData));
+      console.log(_authData);
+    } else {
+      console.log("Wrong email or password");
+    }
+
+    //Persist the data in the Async Storage
+    //to be recovered in the next user session.
+  };
+
   const signOut = async () => {
     //Remove data from context, so the App can be notified
     //and send the user to the AuthStack
@@ -86,7 +127,7 @@ const AuthProvider: React.FC = ({ children }) => {
     //This component will be used to encapsulate the whole App,
     //so all components will have access to the Context
     <AuthContext.Provider
-      value={{ authData, loading, signIn, signOut, BASE_URL }}
+      value={{ authData, loading, signIn, register, signOut, BASE_URL }}
     >
       {children}
     </AuthContext.Provider>

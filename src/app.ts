@@ -12,6 +12,7 @@ const vehicle: Router = require("./routes/vehicle.routes");
 const users: Router = require("./routes/users.routes");
 const address: Router = require("./routes/address.routes");
 const appointment: Router = require("./routes/appointment.routes");
+const payment: Router = require("./routes/payment.routes");
 
 // MIDDLEWARE
 app.use(cors());
@@ -31,5 +32,6 @@ app.use("/api/v1", vehicle);
 app.use("/api/v1", users);
 app.use("/api/v1", address);
 app.use("/api/v1", appointment);
+app.use("/api/v1", payment);
 
 module.exports = app;
