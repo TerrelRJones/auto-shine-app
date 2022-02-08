@@ -54,11 +54,13 @@ model Address {
 }
 
 model Appointment {
-  id            String   @id @unique @default(uuid())
-  date          DateTime
+  id            String @id @unique @default(uuid())
+  date          String
+  time          String
   address       String
   type          String
-  userId        User     @relation(fields: [appointmentId], references: [id])
+  vehicle       String
+  userId        User   @relation(fields: [appointmentId], references: [id])
   appointmentId String
 
   @@map("appointment")
