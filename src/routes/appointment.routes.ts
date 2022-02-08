@@ -7,7 +7,7 @@ import prisma from "../client";
 router.post(
   "/createAppointment",
   async (req: Request<Appointment>, res: Response) => {
-    const { date, address, type, vehicleId } = req.body;
+    const { date, address, type, appointmentId } = req.body;
 
     try {
       const appointment = await prisma.appointment.create({
@@ -15,7 +15,7 @@ router.post(
           date,
           address,
           type,
-          vehicleId,
+          appointmentId,
         },
       });
 
@@ -24,6 +24,18 @@ router.post(
       console.log(error);
       return res.json({ msg: "error setting appointment" });
     }
+  }
+);
+
+router.get(
+  "/appointment/:id",
+  async (req: Request<{ id: string }>, res: Response) => {
+    const id = req.params.id;
+    const appointment = await prisma.appointment.findMany({
+      where: { appointmentId: id },
+    });
+
+    return res.status(200).json(appointment);
   }
 );
 
