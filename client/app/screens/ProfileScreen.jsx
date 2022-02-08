@@ -101,7 +101,7 @@ const ProfileScreen = () => {
 
         <View style={{ marginVertical: 15 }}>
           <Text style={styles.infoTitle}>Vehicle</Text>
-          <FlatList
+          {/* <FlatList
             scrollEnabled={false}
             data={vehicleData}
             renderItem={({ item }) => (
@@ -113,7 +113,7 @@ const ProfileScreen = () => {
               </>
             )}
             keyExtractor={(item) => item.id}
-          />
+          /> */}
         </View>
       </ScrollView>
 

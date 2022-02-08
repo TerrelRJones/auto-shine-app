@@ -20,7 +20,10 @@ router.post("/createAddress", async (req: Request<Address>, res: Response) => {
   return res.status(200).json(address);
 });
 
-router.get("/getAddress", async (req: Request, res: Response) => {});
+router.get(
+  "/getAddress/:id",
+  async (req: Request<{ id: string }>, res: Response) => {}
+);
 
 router.delete("/deleteAddress/:id", async (req, res) => {
   const deletedAddress = await prisma.address.delete({
