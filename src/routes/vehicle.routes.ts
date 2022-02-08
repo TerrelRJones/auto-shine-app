@@ -19,20 +19,6 @@ router.post("/createVehicle", async (req: Request<Vehicle>, res: Response) => {
   return res.status(200).json(vehicle);
 });
 
-router.get("/vehicle/:id", async (req: Request, res: Response) => {
-  const vehicleId = req.params.id;
-
-  try {
-    const vehicleAppointments = await prisma.vehicle.findUnique({
-      where: { id: vehicleId },
-      include: { appointments: true },
-    });
-    return res.status(200).json(vehicleAppointments);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 router.delete("/deleteVehicle/:id", async (req, res) => {
   const deletedVehicle = prisma.vehicle.delete({
     where: { id: req.params.id },
