@@ -26,11 +26,6 @@ Heroku.
 ### What I'll Have to Learn
 I'll have to learn React Native and how user authentication works with mobile apps. Also I will have to learn how to integrate Stripe for payment processing. 
 
-### AUTOSHINE PRESENTATION
-
-[AUTOSHINE PRESENTATION](https://github.com/TerrelRJones/liftoff-assignments/blob/master/P6-Project_Presentation/autoShinePresentation_v1.pdf)
-
-
 ### Wireframes
 
 ## Auth Stack 
