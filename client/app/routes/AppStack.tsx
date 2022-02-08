@@ -7,14 +7,7 @@ import MdIcons from "@expo/vector-icons/MaterialIcons";
 import HomeStack from "./HomeStack";
 
 import ProfileScreen from "../screens/ProfileScreen";
-
-function OrderScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Orders !</Text>
-    </View>
-  );
-}
+import AppointmentScreen from "../screens/AppointmentScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +24,7 @@ const AppStackScreen = () => {
               iconName = focused ? "home" : "home";
             } else if (route.name === "Profile") {
               iconName = focused ? "person" : "person";
-            } else if (route.name === "Orders") {
+            } else if (route.name === "Appointments") {
               iconName = focused ? "drive-eta" : "drive-eta";
             }
 
@@ -48,8 +41,8 @@ const AppStackScreen = () => {
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="Orders"
-          component={OrderScreen}
+          name="Appointments"
+          component={AppointmentScreen}
           options={{ headerShown: false }}
         />
         <Tab.Screen
