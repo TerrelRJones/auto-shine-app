@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
+import { color } from "./colors";
 
 type Props = {
   title: string;
@@ -27,15 +28,15 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
+    backgroundColor: `${color.primary}`,
 
     borderRadius: 5,
     marginVertical: 5,
   },
   btnText: {
-    fontSize: 15,
+    fontSize: 20,
     color: "white",
-    fontWeight: "bold",
+    fontWeight: "800",
     textTransform: "uppercase",
   },
 });
