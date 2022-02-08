@@ -29,7 +29,6 @@ const ServiceScreen = () => {
   const [appointmentDate, setAppointmentDate] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
   const [appointmentVehicle, setAppointmentVehicle] = useState("");
-  const [carId, setCarId] = useState("");
   const [appointmentAddress, setAppointmentAddress] = useState("");
   const [appointmentComment, setAppointmentComment] = useState("");
 
@@ -52,7 +51,6 @@ const ServiceScreen = () => {
       date: appointmentDate,
       time: appointmentTime,
       vehicle: appointmentVehicle,
-      vehicleId: carId,
       address: appointmentAddress,
     });
   };
@@ -198,7 +196,6 @@ const ServiceScreen = () => {
           onSelect={(selectedItem, index) => {
             let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
             setAppointmentVehicle(car);
-            setCarId(selectedItem.id);
 
             console.log(car);
           }}
