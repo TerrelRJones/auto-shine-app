@@ -12,29 +12,29 @@ datasource db {
 }
 
 model User {
-  id        String    @id @unique @default(uuid())
-  firstName String
-  lastName  String
-  email     String    @unique
-  password  String
-  vehicle   Vehicle[]
-  address   Address[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          String        @id @unique @default(uuid())
+  firstName   String
+  lastName    String
+  email       String        @unique
+  password    String
+  vehicle     Vehicle[]
+  address     Address[]
+  appointment Appointment[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@map(name: "user")
 }
 
 model Vehicle {
-  id           String        @id @unique @default(uuid())
-  year         String
-  make         String
-  model        String
-  userId       User          @relation(fields: [vehicleId], references: [id])
-  vehicleId    String
-  appointments Appointment[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id        String   @id @unique @default(uuid())
+  year      String
+  make      String
+  model     String
+  userId    User     @relation(fields: [vehicleId], references: [id])
+  vehicleId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map(name: "vehicle")
 }
@@ -54,12 +54,12 @@ model Address {
 }
 
 model Appointment {
-  id        String   @id @unique @default(uuid())
-  date      DateTime
-  address   String
-  type      String
-  Vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
-  vehicleId String
+  id            String   @id @unique @default(uuid())
+  date          DateTime
+  address       String
+  type          String
+  userId        User     @relation(fields: [appointmentId], references: [id])
+  appointmentId String
 
   @@map("appointment")
 }
