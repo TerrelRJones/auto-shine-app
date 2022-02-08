@@ -7,7 +7,8 @@ import prisma from "../client";
 router.post(
   "/createAppointment",
   async (req: Request<Appointment>, res: Response) => {
-    const { date, time, address, type, vehicle, appointmentId } = req.body;
+    const { date, time, address, type, vehicle, comment, appointmentId } =
+      req.body;
 
     try {
       const appointment = await prisma.appointment.create({
@@ -17,6 +18,7 @@ router.post(
           address,
           type,
           vehicle,
+          comment,
           appointmentId,
         },
       });
