@@ -40,20 +40,23 @@ const register = async (
   password: string,
   password2: string
 ): Promise<AuthData> => {
-  const user = await fetch("http://localhost:4001/api/v1/register", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      firstName,
-      lastName,
-      email,
-      password,
-      password2,
-    }),
-  });
+  const user = await fetch(
+    "https://auto-shine-app.herokuapp.com/api/v1/register",
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+        password2,
+      }),
+    }
+  );
 
   const JWT = await user.json();
 
