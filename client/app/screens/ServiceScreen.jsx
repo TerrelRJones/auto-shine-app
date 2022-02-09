@@ -11,6 +11,8 @@ import {
 
 import CustomButton from "../components/CustomButton";
 
+import OppsScreen from "./OppsScreen";
+
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Fontisto } from "@expo/vector-icons/";
 import SelectDropdown from "react-native-select-dropdown";
@@ -31,6 +33,7 @@ const ServiceScreen = () => {
   const [appointmentVehicle, setAppointmentVehicle] = useState("");
   const [appointmentAddress, setAppointmentAddress] = useState("");
   const [appointmentComment, setAppointmentComment] = useState("");
+  const [comment, setComment] = useState("");
 
   const [selectedId, setSelectedId] = useState(null);
   const [selectedIdTime, setSelectedIdTime] = useState(null);
@@ -52,6 +55,7 @@ const ServiceScreen = () => {
       time: appointmentTime,
       vehicle: appointmentVehicle,
       address: appointmentAddress,
+      comment: comment,
     });
   };
 
@@ -128,6 +132,14 @@ const ServiceScreen = () => {
 
   if (userData.length === 0) {
     return <Loading />;
+  }
+
+  if (userData.vehicle.length === 0 || userData.address.length === 0) {
+    return (
+      <>
+        <OppsScreen />
+      </>
+    );
   }
 
   return (
@@ -248,6 +260,7 @@ const ServiceScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Don't want your tires shined? Let us know here!"
+        onChangeText={(text) => setComment(text)}
       />
       <CustomButton title="CONFIRM" onPress={paymentScreenNavigate} />
     </View>
