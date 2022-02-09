@@ -14,7 +14,7 @@ const address: Router = require("./routes/address.routes");
 const appointment: Router = require("./routes/appointment.routes");
 const payment: Router = require("./routes/payment.routes");
 
-import { auth } from "./middleware/authorization";
+import { Auth } from "./middleware/authorization";
 
 // MIDDLEWARE
 app.use(cors());
@@ -30,7 +30,7 @@ app.get("/", (req: Request, res: Response) => {
 // Routes
 app.use("/api/v1", userRegister);
 app.use("/api/v1", userLogin);
-app.use(auth);
+app.use(Auth);
 app.use("/api/v1", vehicle);
 app.use("/api/v1", users);
 app.use("/api/v1", address);
