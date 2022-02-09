@@ -10,3 +10,9 @@ export type HomeStackParams = {
   Payment: undefined;
   Confirmation: undefined;
 };
+export type ProfileStackParams = {
+  Profile: undefined;
+  Edit: undefined;
+  AddVehicle: undefined;
+  AddAddress: undefined;
+};
