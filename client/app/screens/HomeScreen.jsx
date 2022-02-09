@@ -14,7 +14,6 @@ import {
 import { color } from "../components/colors";
 
 import serviceData from "../data/service";
-import Title from "../components/Title";
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/Auth";
@@ -66,12 +65,12 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Title title={`Hello, ${userName.firstName}!`} />
+      <Text style={styles.title}>{`Hello, ${userName.firstName}!`}</Text>
 
       <View>
         <Text
           style={{
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: "bold",
             marginTop: 10,
           }}
@@ -85,14 +84,17 @@ const HomeScreen = () => {
             color: "gray",
           }}
         >
-          {`${userName.address[0].city}, ${userName.address[0].state}`}
+          {!userName.address[0]
+            ? "N/A"
+            : `${userName.address[0].city}, ${userName.address[0].state}`}
         </Text>
       </View>
       <Text
         style={{
           fontSize: 20,
           fontWeight: "bold",
-          marginTop: 40,
+          marginTop: 30,
+          marginBottom: 10,
         }}
       >
         Services
@@ -134,19 +136,30 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   serviceContainer: {
-    backgroundColor: `${color.whiteSmoke}`,
-    width: 150,
-    height: 150,
+    backgroundColor: `${color.white}`,
+    shadowColor: `${color.secondary}`,
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    width: 170, // 175
+    height: 170, // 250
     borderRadius: 10,
-    marginBottom: 20,
-    marginRight: 20,
+    marginBottom: 10,
+    marginRight: 10,
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   serviceText: {
     fontSize: 15,
-    fontWeight: "500",
+    fontWeight: "700",
+    textTransform: "uppercase",
     marginTop: 10,
+    color: `${color.secondary}`,
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: "800",
+    color: `${color.primary}`,
   },
 });

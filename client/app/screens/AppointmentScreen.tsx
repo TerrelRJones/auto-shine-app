@@ -1,5 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
+
 import { Loading } from "../components/Loading";
 
 import { useAuth } from "../contexts/Auth";
@@ -49,7 +50,7 @@ const AppointmentScreen = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `http://localhost:4001/api/v1/appointment/${auth.authData?.userId}`
+        `${auth.BASE_URL}api/v1/appointment/${auth.authData?.userId}`
       );
       const appointments = await data.json();
       setAppointments(appointments);
