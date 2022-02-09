@@ -1,22 +1,20 @@
-import {
-  FlatList,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import CustomButton from "../components/CustomButton";
 import Title from "../components/Title";
+import MdIcons from "@expo/vector-icons/MaterialIcons";
 
 import { useAuth } from "../contexts/Auth";
 import { Loading } from "../components/Loading";
+import { color } from "../components/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileScreen = () => {
   const [userData, setUserData] = useState();
   const [vehicleData, setVehicleData] = useState([]);
+
+  const navigation = useNavigation();
 
   const auth = useAuth();
 
@@ -47,18 +45,36 @@ const ProfileScreen = () => {
   }
 
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: `${color.white}` }}>
       <View
         style={{
           flexDirection: "row",
-          alignItems: "baseline",
+          // alignItems: "baseline",
           justifyContent: "space-between",
         }}
       >
         <Title title="Profile" />
-        <Pressable onPress={() => console.log("Edit button pressed")}>
-          <Text style={styles.btn}>Edit</Text>
-        </Pressable>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <Pressable
+            onPress={() => navigation.push("AddVehicle")}
+            style={{ marginRight: 10 }}
+          >
+            <MdIcons name={"drive-eta"} size={30} color={color.primary} />
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.push("AddAddress")}
+            style={{ marginRight: 10 }}
+          >
+            <MdIcons name={"map"} size={30} color={color.primary} />
+          </Pressable>
+          <Pressable onPress={() => navigation.push("Edit")}>
+            <MdIcons name={"person"} size={30} color={color.primary} />
+          </Pressable>
+        </View>
       </View>
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <View
@@ -67,6 +83,7 @@ const ProfileScreen = () => {
             justifyContent: "center",
             height: 150,
             marginTop: 15,
+            backgroundColor: `${color.white}`,
           }}
         >
           <View style={styles.photo}></View>
@@ -74,7 +91,9 @@ const ProfileScreen = () => {
             style={styles.profileName}
           >{`${userData.firstName} ${userData.lastName}`}</Text>
           <Text style={styles.locationTitle}>
-            {`${userData.address[0].city}, ${userData.address[0].state}`}
+            {!userData.address[0]
+              ? "N/A"
+              : `${userData.address[0].city}, ${userData.address[0].state}`}
           </Text>
         </View>
 
@@ -87,33 +106,28 @@ const ProfileScreen = () => {
         </View>
         <View style={{ marginVertical: 15 }}>
           <Text style={styles.infoTitle}>Address</Text>
+          <Text style={styles.infoSubTitle}>street</Text>
+          <Text style={styles.infoSubTitleData}>
+            {!userData.address[0] ? "N/A" : `${userData.address[0].street}`}
+          </Text>
           <Text style={styles.infoSubTitle}>zip code</Text>
-          <Text
-            style={styles.infoSubTitleData}
-          >{`${userData.address[0].zip}`}</Text>
-          <Text style={styles.infoSubTitle}>addresss 1</Text>
-          <Text
-            style={styles.infoSubTitleData}
-          >{`${userData.address[0].street}`}</Text>
-          <Text style={styles.infoSubTitle}>address 2</Text>
-          <Text style={styles.infoSubTitleData}>#23D</Text>
+          <Text style={styles.infoSubTitleData}>
+            {!userData.address[0] ? "N/A" : `${userData.address[0].zip}`}
+          </Text>
         </View>
 
         <View style={{ marginVertical: 15 }}>
           <Text style={styles.infoTitle}>Vehicle</Text>
-          {/* <FlatList
-            scrollEnabled={false}
-            data={vehicleData}
-            renderItem={({ item }) => (
-              <>
-                <Text style={styles.infoSubTitle}>1</Text>
-                <Text style={styles.infoSubTitleData}>
-                  {item.year} {item.make} {item.model}
-                </Text>
-              </>
-            )}
-            keyExtractor={(item) => item.id}
-          /> */}
+
+          {!vehicleData
+            ? "N/A"
+            : vehicleData.map((item) => (
+                <>
+                  <Text style={styles.infoSubTitleData} key={item.id}>
+                    {item.year} {item.make} {item.model}
+                  </Text>
+                </>
+              ))}
         </View>
       </ScrollView>
 
@@ -123,7 +137,7 @@ const ProfileScreen = () => {
           auth.signOut();
         }}
       />
-    </>
+    </View>
   );
 };
 
@@ -131,12 +145,12 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   btn: {
-    color: "#2C9BF0",
+    color: `${color.primary}`,
     fontSize: 15,
     fontWeight: "700",
   },
   photo: {
-    backgroundColor: "red",
+    backgroundColor: `${color.primary}`,
     width: 100,
     height: 100,
     borderRadius: 50,
