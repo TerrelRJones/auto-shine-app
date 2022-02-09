@@ -25,5 +25,36 @@ router.get(
     }
   }
 );
+router.put(
+  "/user/:userId",
+  auth,
+  async (
+    req: Request<{
+      userId: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    }>,
+    res: Response
+  ) => {
+    const { firstName, lastName, email } = req.body;
+    const { userId } = req.params;
+
+    try {
+      const updateUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+        },
+      });
+
+      return res.json(updateUser);
+    } catch (error) {
+      console.error();
+    }
+  }
+);
 
 module.exports = router;
