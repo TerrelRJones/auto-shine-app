@@ -6,8 +6,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MdIcons from "@expo/vector-icons/MaterialIcons";
 import HomeStack from "./HomeStack";
 
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileStack from "../routes/ProfileStack";
 import AppointmentScreen from "../screens/AppointmentScreen";
+import { color } from "../components/colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +32,7 @@ const AppStackScreen = () => {
             // You can return any component that you like here!
             return <MdIcons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: "#2C9BF0",
+          tabBarActiveTintColor: `${color.primary}`,
           tabBarInactiveTintColor: "black",
         })}
       >
@@ -47,7 +48,7 @@ const AppStackScreen = () => {
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={ProfileStack}
           options={{ headerShown: false }}
         />
       </Tab.Navigator>
