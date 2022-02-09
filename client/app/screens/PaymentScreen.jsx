@@ -41,6 +41,7 @@ const PaymentScreen = () => {
   const date = route.params.date;
   const vehicle = route.params.vehicle;
   const address = route.params.address;
+  const comment = route.params.comment;
 
   const fetchPaymentIntentClientSecret = async () => {
     setIsLoading(true);
@@ -87,22 +88,22 @@ const PaymentScreen = () => {
           // ]);
 
           // Setting users appoint into database
-          const user = await fetch(
-            `http://localhost:4001/api/v1/createAppointment`,
-            {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                date: new Date(`2022-02-11T15:30:00+0200`),
-                address: address,
-                type: serviceTitle,
-                appointmentId: auth.authData.userId,
-              }),
-            }
-          );
+          const user = await fetch(`${auth.BASE_URL}api/v1/createAppointment`, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              date: "Feb 11",
+              time: "3:30",
+              address: address,
+              type: serviceTitle,
+              vehicle: vehicle,
+              comment: comment,
+              appointmentId: auth.authData.userId,
+            }),
+          });
           const res = await user.json();
           // console.log(res);
           console.log("Payment successful", paymentIntent);
