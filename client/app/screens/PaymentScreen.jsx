@@ -93,6 +93,7 @@ const PaymentScreen = () => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
+              token: `${auth.authData?.token}`,
             },
             body: JSON.stringify({
               date: "Feb 11",

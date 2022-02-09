@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import env from "dotenv";
 
 env.config();
+const auth = require("../middleware/authorization");
 
 const SECRET_KEY: string = "sk_test_Kr5Zl2GzMklmlui8UFoPmqVO";
 
@@ -13,6 +14,7 @@ const router: Router = Router();
 
 router.post(
   "/create-payment-intent",
+  auth,
   async (req: Request<{ price: string }>, res: Response) => {
     const { price } = req.body;
     try {

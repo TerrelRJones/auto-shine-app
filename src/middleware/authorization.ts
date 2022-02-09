@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 const jwt = require("jsonwebtoken");
 
-export const Auth = async (req: Request, res: Response, next: NextFunction) => {
+module.exports = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.header("token");
     // const token = authHeader.split(" ")[1];

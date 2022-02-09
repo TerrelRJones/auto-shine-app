@@ -2,10 +2,13 @@ import { Appointment } from "@prisma/client";
 import { Router, Request, Response } from "express";
 const router: Router = Router();
 
+const auth = require("../middleware/authorization");
+
 import prisma from "../client";
 
 router.post(
   "/createAppointment",
+  auth,
   async (req: Request<Appointment>, res: Response) => {
     const { date, time, address, type, vehicle, comment, appointmentId } =
       req.body;
@@ -33,6 +36,7 @@ router.post(
 
 router.get(
   "/appointment/:id",
+  auth,
   async (req: Request<{ id: string }>, res: Response) => {
     const id = req.params.id;
     const appointment = await prisma.appointment.findMany({
@@ -43,11 +47,15 @@ router.get(
   }
 );
 
-router.delete("/cancelAppointment/:id", async (req: Request, res: Response) => {
-  const deletedAppointment = await prisma.appointment.delete({
-    where: { id: req.params.id },
-  });
-  return res.status(200).json(deletedAppointment);
-});
+router.delete(
+  "/cancelAppointment/:id",
+  auth,
+  async (req: Request, res: Response) => {
+    const deletedAppointment = await prisma.appointment.delete({
+      where: { id: req.params.id },
+    });
+    return res.status(200).json(deletedAppointment);
+  }
+);
 
 module.exports = router;
