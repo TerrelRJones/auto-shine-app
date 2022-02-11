@@ -7,6 +7,10 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
 import CustomButton from "../components/CustomButton";
@@ -33,7 +37,6 @@ const ServiceScreen = () => {
   const [appointmentVehicle, setAppointmentVehicle] = useState("");
   const [appointmentAddress, setAppointmentAddress] = useState("");
   const [appointmentComment, setAppointmentComment] = useState("");
-  const [comment, setComment] = useState("");
 
   const [selectedId, setSelectedId] = useState(null);
   const [selectedIdTime, setSelectedIdTime] = useState(null);
@@ -55,7 +58,7 @@ const ServiceScreen = () => {
       time: appointmentTime,
       vehicle: appointmentVehicle,
       address: appointmentAddress,
-      comment: comment,
+      comment: appointmentComment,
     });
   };
 
@@ -93,7 +96,7 @@ const ServiceScreen = () => {
     return (
       <SelectedBlurb
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => setSelectedId(item.id, setAppointmentDate(item.day))}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
@@ -119,7 +122,9 @@ const ServiceScreen = () => {
     return (
       <SelectedTimeBlurb
         item={item}
-        onPress={() => setSelectedIdTime(item.id)}
+        onPress={() =>
+          setSelectedIdTime(item.id, setAppointmentTime(item.time))
+        }
         backgroundColor={{ backgroundColor }}
       />
     );
@@ -143,127 +148,137 @@ const ServiceScreen = () => {
   }
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
-      <View style={styles.styleContainer}>
-        <Pressable onPress={() => navigation.goBack()} style={styles.btn}>
-          <Fontisto name="angle-dobule-left" size={24} />
-        </Pressable>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Title title={service.product} />
-        </View>
-      </View>
-      {/* DATES  */}
-      <View style={styles.datesContainer}>
-        <Text style={styles.dateTitle}>Date</Text>
-        <View>
-          <FlatList
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            data={dateData}
-            renderItem={renderItemDate}
-            keyExtractor={(item) => item.id}
-            extraData={selectedId}
-          />
-        </View>
-      </View>
-      {/* Time */}
-      <View style={styles.datesContainer}>
-        <Text style={styles.dateTitle}>Time</Text>
-        <View>
-          <FlatList
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            data={serviceTimeData}
-            renderItem={renderItemTime}
-            keyExtractor={(item) => item.id}
-            extraData={selectedIdTime}
-          />
-        </View>
-      </View>
-      {/* Vehicle and address selection */}
-      <View style={styles.datesContainer}>
-        <Text style={styles.dateTitle}>Vehicle</Text>
-        <SelectDropdown
-          buttonStyle={{
-            backgroundColor: "black",
-            borderRadius: 5,
-            width: "100%",
-          }}
-          buttonTextStyle={{
-            color: "white",
-            fontSize: 20,
-            fontWeight: "700",
-          }}
-          defaultButtonText="Select Vehicle"
-          data={userData.vehicle}
-          // data={vehicles}
-          onSelect={(selectedItem, index) => {
-            let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
-            setAppointmentVehicle(car);
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ backgroundColor: "white", flex: 1 }}>
+          <View style={styles.styleContainer}>
+            <Pressable onPress={() => navigation.goBack()} style={styles.btn}>
+              <Fontisto name="angle-dobule-left" size={24} />
+            </Pressable>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Title title={service.product} />
+            </View>
+          </View>
+          {/* DATES  */}
+          <View style={styles.datesContainer}>
+            <Text style={styles.dateTitle}>Date</Text>
+            <View>
+              <FlatList
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                data={dateData}
+                renderItem={renderItemDate}
+                keyExtractor={(item) => item.id}
+                extraData={selectedId}
+              />
+            </View>
+          </View>
+          {/* Time */}
+          <View style={styles.datesContainer}>
+            <Text style={styles.dateTitle}>Time</Text>
+            <View>
+              <FlatList
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                data={serviceTimeData}
+                renderItem={renderItemTime}
+                keyExtractor={(item) => item.id}
+                extraData={selectedIdTime}
+              />
+            </View>
+          </View>
+          {/* Vehicle and address selection */}
+          <View style={styles.datesContainer}>
+            <Text style={styles.dateTitle}>Vehicle</Text>
+            <SelectDropdown
+              buttonStyle={{
+                backgroundColor: "black",
+                borderRadius: 5,
+                width: "100%",
+              }}
+              buttonTextStyle={{
+                color: "white",
+                fontSize: 20,
+                fontWeight: "700",
+              }}
+              defaultButtonText="Select Vehicle"
+              data={userData.vehicle}
+              // data={vehicles}
+              onSelect={(selectedItem, index) => {
+                let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
+                setAppointmentVehicle(car);
 
-            console.log(car);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
-            // text represented after item is selected
-            // if data array is an array of objects then return selectedItem.property to render after item is selected
-            return car;
-          }}
-          rowTextForSelection={(item, index) => {
-            let car = `${item.year} ${item.make} ${item.model}`;
-            // text represented for each item in dropdown
-            // if data array is an array of objects then return item.property to represent item in dropdown
-            return car;
-          }}
-        />
-      </View>
-      <View style={styles.datesContainer}>
-        <Text style={styles.dateTitle}>Address</Text>
-        <SelectDropdown
-          buttonStyle={{
-            backgroundColor: "black",
-            borderRadius: 5,
-            width: "100%",
-          }}
-          buttonTextStyle={{
-            color: "white",
-            fontSize: 20,
-            fontWeight: "700",
-          }}
-          defaultButtonText="Select Address"
-          data={userData.address}
-          onSelect={(selectedItem, index) => {
-            const address = `${selectedItem.street} ${selectedItem.city}, ${selectedItem.state} ${selectedItem.zip}`;
-            setAppointmentAddress(address);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            // text represented after item is selected
-            // if data array is an array of objects then return selectedItem.property to render after item is selected
-            return selectedItem.street;
-          }}
-          rowTextForSelection={(item, index) => {
-            // text represented for each item in dropdown
-            // if data array is an array of objects then return item.property to represent item in dropdown
-            return item.street;
-          }}
-        />
-      </View>
-      <Text style={styles.dateTitle}>Extra Notes</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Don't want your tires shined? Let us know here!"
-        onChangeText={(text) => setComment(text)}
-      />
-      <CustomButton title="CONFIRM" onPress={paymentScreenNavigate} />
-    </View>
+                console.log(car);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                let car = `${selectedItem.year} ${selectedItem.make} ${selectedItem.model}`;
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return car;
+              }}
+              rowTextForSelection={(item, index) => {
+                let car = `${item.year} ${item.make} ${item.model}`;
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return car;
+              }}
+            />
+          </View>
+          <View style={styles.datesContainer}>
+            <Text style={styles.dateTitle}>Address</Text>
+            <SelectDropdown
+              buttonStyle={{
+                backgroundColor: "black",
+                borderRadius: 5,
+                width: "100%",
+              }}
+              buttonTextStyle={{
+                color: "white",
+                fontSize: 20,
+                fontWeight: "700",
+              }}
+              defaultButtonText="Select Address"
+              data={userData.address}
+              onSelect={(selectedItem, index) => {
+                const address = `${selectedItem.street} ${selectedItem.city}, ${selectedItem.state} ${selectedItem.zip}`;
+                setAppointmentAddress(address);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem.street;
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item.street;
+              }}
+            />
+          </View>
+          <Text style={styles.dateTitle}>Extra Notes</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Don't want your tires shined? Let us know here!"
+            onChangeText={(text) => setAppointmentComment(text)}
+            maxLength={20}
+            // multiline
+            // numberOfLines={1}
+          />
+          <CustomButton title="CONFIRM" onPress={paymentScreenNavigate} />
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -313,5 +328,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderWidth: 2,
     borderRadius: 5,
+    padding: 10,
+    fontSize: 20,
   },
 });
