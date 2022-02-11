@@ -21,7 +21,7 @@ const EditScreen = () => {
 
   const getUserInfo = async () => {
     const user = await fetch(
-      `http://localhost:4001/api/v1/user/${auth.authData?.userId}`,
+      `${auth.BASE_URL}api/v1/user/${auth.authData?.userId}`,
       {
         method: "GET",
         headers: {
@@ -39,7 +39,7 @@ const EditScreen = () => {
   };
 
   const updateUserInfo = async () => {
-    await fetch(`http://localhost:4001/api/v1/user/${auth.authData?.userId}`, {
+    await fetch(`${auth.BASE_URL}api/v1/user/${auth.authData?.userId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
