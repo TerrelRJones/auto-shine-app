@@ -19,10 +19,6 @@ const signIn = async (email: string, password: string): Promise<AuthData> => {
 
   const JWT = await user.json();
 
-  if (!JWT.token) {
-  }
-  // console.log(JWT);
-
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
