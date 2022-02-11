@@ -16,36 +16,36 @@ export const dateData = [
   {
     id: 0,
     title: day[date.getDay()],
-    day: `${date.getDate()} ${month[date.getMonth()]}`,
+    day: `${month[date.getMonth()]} ${date.getDate()}`,
   },
   {
     id: 1,
     title: day[date.getDay() + 1],
-    day: `${date.getDate() + 1} ${month[date.getMonth()]}`,
+    day: `${month[date.getMonth()]} ${date.getDate() + 1} `,
   },
   {
     id: 2,
     title: day[date.getDay() + 2],
-    day: `${date.getDate() + 2} ${month[date.getMonth()]}`,
+    day: `${month[date.getMonth()]} ${date.getDate() + 2} `,
   },
   {
     id: 3,
     title: day[date.getDay() + 3],
-    day: `${date.getDate() + 3} ${month[date.getMonth()]}`,
+    day: `${month[date.getMonth()]} ${date.getDate() + 3} `,
   },
   {
     id: 4,
     title: day[date.getDay() + 4],
-    day: `${date.getDate() + 4} ${month[date.getMonth()]}`,
+    day: `${month[date.getMonth()]} ${date.getDate() + 4} `,
   },
   {
     id: 5,
     title: day[date.getDay() + 5],
-    day: `${date.getDate() + 5} ${month[date.getMonth()]}`,
+    day: `${month[date.getMonth()]} ${date.getDate() + 5} `,
   },
   {
     id: 6,
     title: day[date.getDay() + 6],
-    day: `${date.getDate() + 6} ${month[date.getMonth()]}`,
+    day: `${month[date.getMonth()]} ${date.getDate() + 6} `,
   },
 ];
