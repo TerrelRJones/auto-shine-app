@@ -121,12 +121,12 @@ const ProfileScreen = () => {
 
           {!vehicleData
             ? "N/A"
-            : vehicleData.map((item) => (
-                <>
-                  <Text style={styles.infoSubTitleData} key={item.id}>
+            : vehicleData.map((item, index) => (
+                <View key={item.id}>
+                  <Text style={styles.infoSubTitleData}>
                     {item.year} {item.make} {item.model}
                   </Text>
-                </>
+                </View>
               ))}
         </View>
       </ScrollView>
