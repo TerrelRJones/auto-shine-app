@@ -35,7 +35,9 @@ router.post("/register", async (req: Request<User>, res: Response) => {
       expiresIn: "8hr",
     });
 
-    return res.json({ userId: user.id, token: token }).status(200);
+    return res
+      .status(200)
+      .json({ msg: "Registered!", userId: user.id, token: token });
   } catch (error) {
     return res.status(400);
   }
