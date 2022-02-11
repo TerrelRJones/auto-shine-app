@@ -6,9 +6,16 @@ type Props = {
   value: string;
   setValue: any;
   secureTextEntry: boolean;
+  keyBoardType?: any;
 };
 
-const Input = ({ placeholder, value, setValue, secureTextEntry }: Props) => {
+const Input = ({
+  placeholder,
+  value,
+  setValue,
+  secureTextEntry,
+  keyBoardType,
+}: Props) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -18,6 +25,7 @@ const Input = ({ placeholder, value, setValue, secureTextEntry }: Props) => {
         value={value}
         onChangeText={setValue}
         secureTextEntry={secureTextEntry}
+        keyboardType={keyBoardType}
       />
     </View>
   );
