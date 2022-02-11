@@ -22,7 +22,7 @@ app.use(morgan("dev"));
 
 // ENDPOINTS
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome To Auto-Shine API");
+  res.send("Welcome To AUTOSHINE API");
 });
 
 // Routes
