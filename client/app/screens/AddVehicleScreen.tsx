@@ -7,6 +7,7 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import SmallTextTitle from "../components/SmallTextTitle";
 import NavBack from "../components/NavBack";
+import { Loading } from "../components/Loading";
 
 import { color } from "../components/colors";
 
@@ -16,25 +17,37 @@ const AddVehicleScreen = () => {
   const [year, setYear] = useState<string>("");
   const [make, setMake] = useState<string>("");
   const [model, setModel] = useState<string>("");
+  const [loading, setLoading] = useState<Boolean>(false);
   const navigation = useNavigation();
   const auth = useAuth();
 
   const addVehicle = async () => {
-    await fetch(`http://localhost:4001/api/v1/createVehicle/`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        token: `${auth.authData?.token}`,
-      },
-      body: JSON.stringify({
-        year,
-        make,
-        model,
-        vehicleId: `${auth.authData?.userId}`,
-      }),
-    });
+    try {
+      setLoading(true);
+      await fetch(`${auth.BASE_URL}api/v1/createVehicle/`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          token: `${auth.authData?.token}`,
+        },
+        body: JSON.stringify({
+          year,
+          make,
+          model,
+          vehicleId: `${auth.authData?.userId}`,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View style={styles.container}>
