@@ -4,6 +4,10 @@ import {
   View,
   Pressable,
   ActivityIndicator,
+  Platform,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState } from "react";
 import { Fontisto } from "@expo/vector-icons/";
@@ -48,7 +52,9 @@ const PaymentScreen = () => {
     const res = await fetch(`${API_URL}/create-payment-intent`, {
       method: "POST",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
+        token: `${auth.authData?.token}`,
       },
       body: JSON.stringify({
         price: `${servicePrice}00`,
@@ -96,8 +102,8 @@ const PaymentScreen = () => {
               token: `${auth.authData?.token}`,
             },
             body: JSON.stringify({
-              date: "Feb 11",
-              time: "3:30",
+              date: date,
+              time: time,
               address: address,
               type: serviceTitle,
               vehicle: vehicle,
@@ -117,86 +123,110 @@ const PaymentScreen = () => {
 
   return (
     <>
-      {isLoading ? (
-        <>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <ActivityIndicator color={"#000"} animating={true} size="small" />
-          </View>
-        </>
-      ) : (
-        <>
-          <View style={{ backgroundColor: `${color.white}`, flex: 1 }}>
-            <View style={styles.styleContainer}>
-              <Pressable onPress={() => navigation.goBack()} style={styles.btn}>
-                <Fontisto name="angle-dobule-left" size={24} />
-              </Pressable>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          {isLoading ? (
+            <>
               <View
                 style={{
                   flex: 1,
-                  alignItems: "center",
                   justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <Title title="Payment Data" />
+                <ActivityIndicator
+                  color={"#000"}
+                  animating={true}
+                  size="small"
+                />
               </View>
-            </View>
-            <View>
-              <View style={{ marginBottom: 15 }}>
-                <SmallTextTitle title="Total" />
-                <Text
-                  style={{ fontSize: 45, fontWeight: "bold", marginBottom: 20 }}
-                >{`$${servicePrice}.00`}</Text>
+            </>
+          ) : (
+            <>
+              <View style={{ backgroundColor: `${color.white}`, flex: 1 }}>
+                <View style={styles.styleContainer}>
+                  <Pressable
+                    onPress={() => navigation.goBack()}
+                    style={styles.btn}
+                  >
+                    <Fontisto name="angle-dobule-left" size={24} />
+                  </Pressable>
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Title title="Payment Data" />
+                  </View>
+                </View>
+                <View>
+                  <View style={{ marginBottom: 15 }}>
+                    <SmallTextTitle title="Total" />
+                    <Text
+                      style={{
+                        fontSize: 45,
+                        fontWeight: "bold",
+                        marginBottom: 20,
+                      }}
+                    >{`$${servicePrice}.00`}</Text>
+                  </View>
+                  <SmallTextTitle title="Services" />
+                  <View style={{ marginBottom: 20, marginTop: 10 }}>
+                    {/* TYPE  */}
+                    <ServicesRow title="Type" text={serviceTitle} />
+
+                    {/* DATE  */}
+                    <ServicesRow title="Date" text={date} />
+
+                    {/* TIME  */}
+                    <ServicesRow title="Time" text={time} />
+
+                    {/* VEHICLE  */}
+                    <ServicesRow title="Vehicle" text={vehicle} />
+
+                    {/* ADDRESS  */}
+                    <ServicesRow title="Address" text={address} />
+                  </View>
+                  <CustomInput
+                    placeholder="email"
+                    value={email}
+                    setValue={setEmail}
+                    secureTextEntry={false}
+                  />
+                  <SmallTextTitle title="Card Info" />
+                  <CardField
+                    postalCodeEnabled={true}
+                    placeholder={{
+                      number: "4242 4242 4242 4242",
+                    }}
+                    cardStyle={styles.card}
+                    style={styles.cardContainer}
+                    onCardChange={(cardDetails) => {
+                      setCardDetails(cardDetails);
+                    }}
+                  />
+                  <View style={{ alignItems: "center" }}>
+                    <Text style={{ fontWeight: "bold" }}>
+                      Powered by Stripe!
+                    </Text>
+                  </View>
+                </View>
+
+                <CustomButton
+                  title="Pay"
+                  onPress={confirmAppointment}
+                  disabled={loading}
+                />
               </View>
-              <SmallTextTitle title="Services" />
-              <View style={{ marginBottom: 20, marginTop: 10 }}>
-                {/* TYPE  */}
-                <ServicesRow title="Type" text={serviceTitle} />
-
-                {/* DATE  */}
-                <ServicesRow title="Date" text="Feb 11" />
-
-                {/* TIME  */}
-                <ServicesRow title="Time" text="3:00 PM" />
-
-                {/* VEHICLE  */}
-                <ServicesRow title="Vehicle" text={vehicle} />
-
-                {/* ADDRESS  */}
-                <ServicesRow title="Address" text={address} />
-              </View>
-              <CustomInput
-                placeholder="email"
-                value={email}
-                setValue={setEmail}
-                secureTextEntry={false}
-              />
-              <SmallTextTitle title="Card Info" />
-              <CardField
-                postalCodeEnabled={true}
-                placeholder={{
-                  number: "4242 4242 4242 4242",
-                }}
-                cardStyle={styles.card}
-                style={styles.cardContainer}
-                onCardChange={(cardDetails) => {
-                  setCardDetails(cardDetails);
-                }}
-              />
-              <View style={{ alignItems: "center" }}>
-                <Text style={{ fontWeight: "bold" }}>Powered by Stripe!</Text>
-              </View>
-            </View>
-
-            <CustomButton
-              title="Pay"
-              onPress={confirmAppointment}
-              disabled={loading}
-            />
-          </View>
-        </>
-      )}
+            </>
+          )}
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </>
   );
 };
