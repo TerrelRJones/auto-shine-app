@@ -7,6 +7,10 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Platform,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomButtonSecondary from "../components/CustomButtonSecondary";
@@ -34,54 +38,69 @@ const LoginScreen = () => {
     useNavigation<NativeStackNavigationProp<AuthStackParams>>();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={require("../assets/autoshine_logo_color.png")}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </View>
-      <View style={{ flex: 1 }}>
-        <Title title="Login" />
-        <CustomInput
-          placeholder="email"
-          value={email}
-          setValue={setEmail}
-          secureTextEntry={false}
-        />
-        <CustomInput
-          placeholder="password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry
-        />
-        {loading ? (
-          <ActivityIndicator color={"#000"} animating={true} size="small" />
-        ) : (
-          <CustomButton title="Login" onPress={signIn} />
-        )}
-        <CustomButtonSecondary title="Forgot Password" onPress={() => null} />
-        <View style={{ flexDirection: "row", marginVertical: 5 }}>
-          <Text style={{ fontWeight: "600" }}>No account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
-            <Text
-              style={{ marginLeft: 5, color: "#2C9BF0", fontWeight: "600" }}
-            >
-              Register
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity onPress={() => null}>
-          <Text style={{ color: "#2C9BF0", fontWeight: "600" }}>Privacy</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={styles.container}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/autoshine_logo_color.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Title title="Login" />
+            <CustomInput
+              placeholder="email"
+              value={email}
+              setValue={setEmail}
+              secureTextEntry={false}
+              keyBoardType="email-address"
+            />
+            <CustomInput
+              placeholder="password"
+              value={password}
+              setValue={setPassword}
+              secureTextEntry
+            />
+            {loading ? (
+              <ActivityIndicator color={"#000"} animating={true} size="small" />
+            ) : (
+              <CustomButton title="Login" onPress={signIn} />
+            )}
+            <CustomButtonSecondary
+              title="Forgot Password"
+              onPress={() => null}
+            />
+            <View style={{ flexDirection: "row", marginVertical: 5 }}>
+              <Text style={{ fontWeight: "600" }}>No account?</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Registration")}
+              >
+                <Text
+                  style={{ marginLeft: 5, color: "#2C9BF0", fontWeight: "600" }}
+                >
+                  Register
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={() => null}>
+              <Text style={{ color: "#2C9BF0", fontWeight: "600" }}>
+                Privacy
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

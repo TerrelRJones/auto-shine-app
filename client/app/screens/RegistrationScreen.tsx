@@ -8,6 +8,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Platform,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { AuthStackParams } from "../types";
 
@@ -38,71 +42,83 @@ const RegistrationScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={require("../assets/autoshine_logo_color.png")}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </View>
-      <View style={{ flex: 1 }}>
-        <Title title="Create Account" />
-        <CustomInput
-          placeholder="First"
-          value={firstName}
-          setValue={setFirstName}
-          secureTextEntry={false}
-        />
-        <CustomInput
-          placeholder="Last"
-          value={lastName}
-          setValue={setLastName}
-          secureTextEntry={false}
-        />
-        <CustomInput
-          placeholder="email"
-          value={email}
-          setValue={setEmail}
-          secureTextEntry={false}
-        />
-        <CustomInput
-          placeholder="password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry
-        />
-        <CustomInput
-          placeholder="confirm password"
-          value={password2}
-          setValue={setPassword2}
-          secureTextEntry
-        />
-        {loading ? (
-          <ActivityIndicator color={"#000"} animating={true} size="small" />
-        ) : (
-          <CustomButton title="Register" onPress={submitCredintials} />
-        )}
-        <View style={{ flexDirection: "row", marginVertical: 5 }}>
-          <Text style={{ fontWeight: "600" }}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text
-              style={{ marginLeft: 5, color: "#2C9BF0", fontWeight: "600" }}
-            >
-              Login
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity onPress={() => null}>
-          <Text style={{ color: "#2C9BF0", fontWeight: "600" }}>Privacy</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={styles.container}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/autoshine_logo_color.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Title title="Create Account" />
+            <CustomInput
+              placeholder="First"
+              value={firstName}
+              setValue={setFirstName}
+              secureTextEntry={false}
+            />
+            <CustomInput
+              placeholder="Last"
+              value={lastName}
+              setValue={setLastName}
+              secureTextEntry={false}
+            />
+            <CustomInput
+              placeholder="email"
+              value={email}
+              setValue={setEmail}
+              secureTextEntry={false}
+              keyBoardType="email-address"
+            />
+            <CustomInput
+              placeholder="password"
+              value={password}
+              setValue={setPassword}
+              secureTextEntry
+            />
+            <CustomInput
+              placeholder="confirm password"
+              value={password2}
+              setValue={setPassword2}
+              secureTextEntry
+            />
+            {loading ? (
+              <ActivityIndicator color={"#000"} animating={true} size="small" />
+            ) : (
+              <CustomButton title="Register" onPress={submitCredintials} />
+            )}
+            <View style={{ flexDirection: "row", marginVertical: 5 }}>
+              <Text style={{ fontWeight: "600" }}>
+                Already have an account?
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text
+                  style={{ marginLeft: 5, color: "#2C9BF0", fontWeight: "600" }}
+                >
+                  Login
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={() => null}>
+              <Text style={{ color: "#2C9BF0", fontWeight: "600" }}>
+                Privacy
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
