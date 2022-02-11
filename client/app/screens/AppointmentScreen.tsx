@@ -35,13 +35,13 @@ const AppointmentScreen = () => {
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text>{item.type}</Text>
 
-          <Text style={{ marginBottom: 5 }}>3:00 PM</Text>
+          <Text style={{ marginBottom: 5 }}>{item.time}</Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>2022 BMW 545i</Text>
-          <Text>FEB 11</Text>
+          <Text>{item.vehicle}</Text>
+          <Text>{item.date}</Text>
         </View>
-        {/* <Text>{item.date}</Text> */}
+        <Text>{item.comment}</Text>
       </View>
     );
   };
