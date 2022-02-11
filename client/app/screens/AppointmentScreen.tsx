@@ -50,10 +50,19 @@ const AppointmentScreen = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${auth.BASE_URL}api/v1/appointment/${auth.authData?.userId}`
+        `${auth.BASE_URL}api/v1/appointment/${auth.authData?.userId}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            token: `${auth.authData?.token}`,
+          },
+        }
       );
       const appointments = await data.json();
       setAppointments(appointments);
+      console.log(appointments);
     } catch (e) {
       console.log(e);
     } finally {
@@ -98,7 +107,6 @@ const AppointmentScreen = () => {
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
         onRefresh={getAppointments}
-        // extraData={selectedId}
       />
     </>
   );
