@@ -20,7 +20,7 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-// ENDPOINTS
+// WELCOME ENDPOINT
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome To AUTOSHINE API");
 });
