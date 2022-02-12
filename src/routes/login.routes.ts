@@ -17,9 +17,9 @@ router.post(
       });
 
       // TODO: Validate that users email exist
-
-      // Return if user object is null.
-      if (user === null) return;
+      if (!user) {
+        return res.json({ msg: "User does not exist." });
+      }
 
       const validPassword = await bcrypt.compare(password, user.password);
 
