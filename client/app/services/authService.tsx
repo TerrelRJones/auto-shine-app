@@ -1,6 +1,7 @@
 export type AuthData = {
   token: string;
   userId: string;
+  error: string;
 };
 const BASE_URL: string = "https://auto-shine-app.herokuapp.com/";
 
@@ -24,6 +25,7 @@ const signIn = async (email: string, password: string): Promise<AuthData> => {
       resolve({
         token: JWT.token,
         userId: JWT.userId,
+        error: JWT.error,
       });
     }, 1000);
   });
@@ -36,23 +38,20 @@ const register = async (
   password: string,
   password2: string
 ): Promise<AuthData> => {
-  const user = await fetch(
-    "https://auto-shine-app.herokuapp.com/api/v1/register",
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        password2,
-      }),
-    }
-  );
+  const user = await fetch("http://localhost:4001/api/v1/register", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      password,
+      password2,
+    }),
+  });
 
   const JWT = await user.json();
 
@@ -65,6 +64,7 @@ const register = async (
       resolve({
         token: JWT.token,
         userId: JWT.userId,
+        error: JWT.errors,
       });
     }, 1000);
   });
