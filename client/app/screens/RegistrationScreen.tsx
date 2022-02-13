@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   StyleSheet,
   View,
@@ -87,6 +89,11 @@ const RegistrationScreen = () => {
               setValue={setPassword}
               secureTextEntry
             />
+            {auth.authData?.error ? (
+              <Text>{auth.authData.error[0]}</Text>
+            ) : (
+              <></>
+            )}
             <CustomInput
               placeholder="confirm password"
               value={password2}
