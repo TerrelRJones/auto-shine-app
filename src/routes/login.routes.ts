@@ -30,7 +30,7 @@ router.post(
           .json({ error: "INCORRECRT PASSWORD. Please try again" });
       }
 
-      const token = await jwt.sign(user, "SecretSauce", {
+      const token = await jwt.sign(user, process.env.JWT_SECRET, {
         expiresIn: "8hr",
       });
 
