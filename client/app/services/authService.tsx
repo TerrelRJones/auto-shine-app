@@ -38,7 +38,7 @@ const register = async (
   password: string,
   password2: string
 ): Promise<AuthData> => {
-  const user = await fetch("http://localhost:4001/api/v1/register", {
+  const user = await fetch(`${BASE_URL}api/v1/register`, {
     method: "POST",
     headers: {
       Accept: "application/json",
