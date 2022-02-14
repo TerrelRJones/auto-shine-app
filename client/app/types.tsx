@@ -11,7 +11,7 @@ export type HomeStackParams = {
   Confirmation: undefined;
 };
 export type ProfileStackParams = {
-  Profile: undefined;
+  ProfileScreen: undefined;
   Edit: undefined;
   AddVehicle: undefined;
   AddAddress: undefined;
