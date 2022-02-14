@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { color } from "./colors";
 
 type Props = {
-  title: string;
+  title: any;
   onPress: () => void;
   disabled?: any;
 };
