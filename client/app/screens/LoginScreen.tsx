@@ -72,7 +72,16 @@ const LoginScreen = () => {
               secureTextEntry
             />
             {loading ? (
-              <ActivityIndicator color={"#000"} animating={true} size="small" />
+              <CustomButton
+                title={
+                  <ActivityIndicator
+                    color={"#fff"}
+                    animating={true}
+                    size="small"
+                  />
+                }
+                onPress={() => null}
+              />
             ) : (
               <CustomButton title="Login" onPress={signIn} />
             )}
