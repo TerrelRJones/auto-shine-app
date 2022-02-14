@@ -13,7 +13,7 @@ const Profile = createNativeStackNavigator<ProfileStackParams>();
 const HomeStack = () => {
   return (
     <Profile.Navigator screenOptions={{ headerShown: false }}>
-      <Profile.Screen name="Profile" component={ProfileScreen} />
+      <Profile.Screen name="ProfileScreen" component={ProfileScreen} />
       <Profile.Screen name="Edit" component={EditScreen} />
       <Profile.Screen name="AddVehicle" component={AddVehicleScreen} />
       <Profile.Screen name="AddAddress" component={AddAdressScreen} />
