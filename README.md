@@ -39,3 +39,11 @@ I'll have to learn React Native and how user authentication works with mobile ap
 
 ## Vehicle Stack
 ![VehicleStack](https://user-images.githubusercontent.com/11067335/147862665-578d32cf-0477-4df5-9519-7abb676f51df.jpeg)
+
+### App Designs
+
+<img width="1337" alt="Screenshot 2022-02-14 at 9 27 41 PM" src="https://user-images.githubusercontent.com/11067335/153998534-b4d57a83-3282-4b35-81e6-2cb7a6dd4ad8.png">
+
+<img width="787" alt="Screenshot 2022-02-14 at 9 27 50 PM" src="https://user-images.githubusercontent.com/11067335/153998558-4dc487dd-938e-4496-aec7-6345bc630091.png">
+
+<img width="272" alt="Screenshot 2022-02-14 at 9 27 58 PM" src="https://user-images.githubusercontent.com/11067335/153998576-2257d502-dcf8-4602-8e25-ec0924463098.png">
