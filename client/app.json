@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AutoShine",
-    "slug": "client",
+    "slug": "autoshine-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/autoshine_icon_color.png",
