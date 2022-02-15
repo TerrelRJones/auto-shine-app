@@ -25,7 +25,7 @@ const AddAdressScreen = () => {
   const addAddress = async () => {
     try {
       setLoading(true);
-      await fetch(`${auth.BASE_URL}api/v1/createAddress/`, {
+      await fetch(`${auth.BASE_URL}api/v1/address/`, {
         method: "POST",
         headers: {
           Accept: "application/json",

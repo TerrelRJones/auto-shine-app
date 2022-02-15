@@ -24,7 +24,7 @@ const AddVehicleScreen = () => {
   const addVehicle = async () => {
     try {
       setLoading(true);
-      await fetch(`${auth.BASE_URL}api/v1/createVehicle/`, {
+      await fetch(`${auth.BASE_URL}api/v1/vehicle/`, {
         method: "POST",
         headers: {
           Accept: "application/json",
