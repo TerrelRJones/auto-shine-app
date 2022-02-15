@@ -47,7 +47,7 @@ const PaymentScreen = () => {
 
   const fetchPaymentIntentClientSecret = async () => {
     setIsLoading(true);
-    const res = await fetch(`${API_URL}/create-payment-intent`, {
+    const res = await fetch(`${auth.BASE_URL}api/v1/create-payment-intent`, {
       method: "POST",
       headers: {
         Accept: "application/json",
