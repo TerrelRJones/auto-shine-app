@@ -7,8 +7,7 @@ Auto-Shine is a mobile application that allows users to book a mobile carwash an
 2. Account creation - Users will be able to save a vehicle and address to their accounts.
 3. Appointment scheduling - A user will be able to create, and or choose an appointment.
 4. Commenting - A user will be able to leave a comment on their scheduled appointment. 
-5. Notifications - User will get a notification prior to their appointment.
-6. Payment - After a user chooses an appointment type, they will be prompted to pay via Stripe.
+5. Payment - After a user chooses an appointment type, they will be prompted to pay via Stripe.
 
 ### Technologies
 React Native, 
