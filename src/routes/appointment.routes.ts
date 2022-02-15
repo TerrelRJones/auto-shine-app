@@ -7,7 +7,7 @@ const auth = require("../middleware/authorization");
 import prisma from "../client";
 
 router.post(
-  "/createAppointment",
+  "/appointment",
   auth,
   async (req: Request<Appointment>, res: Response) => {
     const { date, time, address, type, vehicle, comment, appointmentId } =
@@ -47,15 +47,11 @@ router.get(
   }
 );
 
-router.delete(
-  "/cancelAppointment/:id",
-  auth,
-  async (req: Request, res: Response) => {
-    const deletedAppointment = await prisma.appointment.delete({
-      where: { id: req.params.id },
-    });
-    return res.status(200).json(deletedAppointment);
-  }
-);
+router.delete("/appointment/:id", auth, async (req: Request, res: Response) => {
+  const deletedAppointment = await prisma.appointment.delete({
+    where: { id: req.params.id },
+  });
+  return res.status(200).json(deletedAppointment);
+});
 
 module.exports = router;
