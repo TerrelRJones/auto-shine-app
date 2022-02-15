@@ -56,7 +56,7 @@ const AppointmentScreen = () => {
 
   // Cancel Appointment Call
   const deleteAppointment = async (id: string) => {
-    await fetch(`http://localhost:4001/api/v1/appointment/${id}`, {
+    await fetch(`${auth.BASE_URL}api/v1/appointment/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
