@@ -1,5 +1,14 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
+import "react-native-gesture-handler";
+import { Swipeable } from "react-native-gesture-handler";
 
 import { Loading } from "../components/Loading";
 
@@ -13,39 +22,94 @@ const AppointmentScreen = () => {
   const [appointments, setAppointments] = useState([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [loading, setLoading] = useState<Boolean>();
+  const appointmentLength: number = appointments.length;
 
   const auth = useAuth();
 
   interface Props {
     item: any;
+    dragX: any;
+    progress: any;
+    onPress: () => void;
+    onRightPress: () => void;
   }
 
-  const appointmentCard = ({ item }: Props) => {
+  // Slide Right Action
+  const RightAction = ({ progress, dragX, onPress }: Props) => {
+    const scale = dragX.interpolate({
+      inputRange: [-300, 0],
+      outputRange: [4, 0],
+      extrapolate: "clamp",
+    });
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: `${color.whiteSmoke}`,
-          borderRadius: 5,
-          paddingVertical: 10,
-          paddingHorizontal: 10,
-          marginBottom: 10,
-        }}
-      >
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>{item.type}</Text>
-
-          <Text style={{ marginBottom: 5 }}>{item.time}</Text>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.rightActionContainer}>
+          <Animated.Text
+            style={[styles.actionText, { transform: [{ scale }] }]}
+          >
+            Cancel
+          </Animated.Text>
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>{item.vehicle}</Text>
-          <Text>{item.date}</Text>
-        </View>
-        <Text>{item.comment}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
+  // Cancel Appointment Call
+  const deleteAppointment = async (id: string) => {
+    await fetch(`http://localhost:4001/api/v1/appointment/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        token: `${auth.authData?.token}`,
+      },
+    });
+    getAppointments();
+  };
+
+  // Appointment Card Details
+  const appointmentCard = ({ item }: Props) => {
+    return (
+      <Swipeable
+        renderRightActions={(progress, dragX) => (
+          <RightAction
+            progress={progress}
+            dragX={dragX}
+            onPress={() => deleteAppointment(`${item.id}`)}
+          />
+        )}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: `${color.whiteSmoke}`,
+            borderRadius: 5,
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+            marginBottom: 10,
+            height: 80,
+          }}
+        >
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text>{item.type}</Text>
+
+            <Text style={{ marginBottom: 5 }}>{item.time}</Text>
+          </View>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text>{item.vehicle}</Text>
+            <Text>{item.date}</Text>
+          </View>
+          <Text>{item.comment}</Text>
+        </View>
+      </Swipeable>
+    );
+  };
+
+  // Get all appointments
   const getAppointments = async () => {
     try {
       setIsLoading(true);
@@ -79,7 +143,7 @@ const AppointmentScreen = () => {
     return <Loading />;
   }
 
-  if (appointments.length === 0) {
+  if (appointmentLength === 0) {
     return (
       <>
         <View
@@ -99,6 +163,15 @@ const AppointmentScreen = () => {
         }}
       >
         <Title title="Appointments" />
+        <Text
+          style={{
+            fontSize: 20,
+            color: `${color.primary}`,
+            fontWeight: "bold",
+          }}
+        >
+          You have {appointmentLength} appointments scheduled.{" "}
+        </Text>
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -114,4 +187,19 @@ const AppointmentScreen = () => {
 
 export default AppointmentScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  rightActionContainer: {
+    backgroundColor: "#dd2c00",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    paddingRight: 5,
+    borderRadius: 5,
+    height: 80,
+  },
+  actionText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
+    textTransform: "uppercase",
+  },
+});
