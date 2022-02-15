@@ -25,8 +25,6 @@ import Title from "../components/Title";
 import SmallTextTitle from "../components/SmallTextTitle";
 import ServicesRow from "../components/ServicesRow";
 
-const API_URL = "https://auto-shine-app.herokuapp.com/api/v1";
-
 const PaymentScreen = () => {
   const [email, setEmail] = useState();
   const [cardDetails, setCardDetails] = useState();
@@ -94,7 +92,7 @@ const PaymentScreen = () => {
           // ]);
 
           // Setting users appoint into database
-          const user = await fetch(`${auth.BASE_URL}api/v1/createAppointment`, {
+          const user = await fetch(`${auth.BASE_URL}api/v1/appointment`, {
             method: "POST",
             headers: {
               Accept: "application/json",
