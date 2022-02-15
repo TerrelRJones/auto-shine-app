@@ -6,33 +6,29 @@ const auth = require("../middleware/authorization");
 
 import prisma from "../client";
 
-router.post(
-  "/createAddress",
-  auth,
-  async (req: Request<Address>, res: Response) => {
-    const { state, city, street, zip, addressId } = req.body;
+router.post("/address", auth, async (req: Request<Address>, res: Response) => {
+  const { state, city, street, zip, addressId } = req.body;
 
-    const address = await prisma.address.create({
-      data: {
-        state: state,
-        city: city,
-        zip: parseInt(zip),
-        street: street,
-        addressId: addressId,
-      },
-    });
+  const address = await prisma.address.create({
+    data: {
+      state: state,
+      city: city,
+      zip: parseInt(zip),
+      street: street,
+      addressId: addressId,
+    },
+  });
 
-    return res.status(200).json(address);
-  }
-);
+  return res.status(200).json(address);
+});
 
 router.get(
-  "/getAddress/:id",
+  "/address/:id",
   auth,
   async (req: Request<{ id: string }>, res: Response) => {}
 );
 
-router.delete("/deleteAddress/:id", auth, async (req, res) => {
+router.delete("/address/:id", auth, async (req, res) => {
   const deletedAddress = await prisma.address.delete({
     where: { id: req.params.id },
   });
