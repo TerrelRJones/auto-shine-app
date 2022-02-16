@@ -73,6 +73,7 @@ const HomeScreen = () => {
             fontSize: 20,
             fontWeight: "bold",
             marginTop: 10,
+            color: `${color.secondary}`,
           }}
         >
           Location
@@ -95,6 +96,7 @@ const HomeScreen = () => {
           fontWeight: "bold",
           marginTop: 30,
           marginBottom: 10,
+          color: `${color.secondary}`,
         }}
       >
         Services
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
   },
   serviceText: {
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: "800",
     textTransform: "uppercase",
     marginTop: 10,
     color: `${color.secondary}`,

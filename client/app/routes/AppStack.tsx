@@ -18,7 +18,7 @@ const AppStackScreen = () => {
       <Tab.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size = 24 }) => {
+          tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
             if (route.name === "Home") {
@@ -30,10 +30,10 @@ const AppStackScreen = () => {
             }
 
             // You can return any component that you like here!
-            return <MdIcons name={iconName} size={size} color={color} />;
+            return <MdIcons name={iconName} size={30} color={color} />;
           },
           tabBarActiveTintColor: `${color.primary}`,
-          tabBarInactiveTintColor: "black",
+          tabBarInactiveTintColor: "#98CAED",
         })}
       >
         <Tab.Screen

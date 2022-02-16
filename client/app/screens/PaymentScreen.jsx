@@ -159,7 +159,7 @@ const PaymentScreen = () => {
                       justifyContent: "center",
                     }}
                   >
-                    <Title title="Payment Data" />
+                    <Title title="Payment" />
                   </View>
                 </View>
                 <View>

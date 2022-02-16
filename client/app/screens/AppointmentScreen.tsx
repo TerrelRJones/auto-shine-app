@@ -79,29 +79,48 @@ const AppointmentScreen = () => {
           />
         )}
       >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: `${color.whiteSmoke}`,
-            borderRadius: 5,
-            paddingVertical: 10,
-            paddingHorizontal: 10,
-            marginBottom: 10,
-            height: 80,
-          }}
-        >
+        <View style={styles.appointmentCard}>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text>{item.type}</Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "800",
+              }}
+            >
+              {item.type}
+            </Text>
 
-            <Text style={{ marginBottom: 5 }}>{item.time}</Text>
+            <Text
+              style={{
+                marginBottom: 5,
+                fontSize: 15,
+                fontWeight: "800",
+              }}
+            >
+              {item.time}
+            </Text>
           </View>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text>{item.vehicle}</Text>
-            <Text>{item.date}</Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "600",
+              }}
+            >
+              {item.vehicle}
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "600",
+              }}
+            >
+              {item.date}
+            </Text>
           </View>
           <Text>{item.comment}</Text>
         </View>
@@ -201,5 +220,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
     textTransform: "uppercase",
+  },
+  appointmentCard: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    height: 80,
+    backgroundColor: `${color.white}`,
+    shadowColor: `${color.secondary}`,
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    borderRadius: 5,
+    marginRight: 10,
   },
 });

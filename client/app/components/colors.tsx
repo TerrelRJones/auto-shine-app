@@ -1,6 +1,6 @@
 export const color = {
   white: "#fff",
-  secondary: "#000",
+  secondary: "#2C7BD4",
   primary: "#4FB3EF",
   whiteSmoke: "whitesmoke",
 };
