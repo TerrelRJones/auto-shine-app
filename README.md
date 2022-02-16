@@ -22,9 +22,6 @@ Supertest.
 
 Heroku.
 
-### What I'll Have to Learn
-I'll have to learn React Native and how user authentication works with mobile apps. Also I will have to learn how to integrate Stripe for payment processing. 
-
 ### App Screen Shots
 
 ![stackScreens-01](https://user-images.githubusercontent.com/11067335/154188128-2c840695-acc6-4c15-9302-fc764e5bd881.png)
