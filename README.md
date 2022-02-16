@@ -25,6 +25,16 @@ Heroku.
 ### What I'll Have to Learn
 I'll have to learn React Native and how user authentication works with mobile apps. Also I will have to learn how to integrate Stripe for payment processing. 
 
+### App Screen Shots
+
+![stackScreens-01](https://user-images.githubusercontent.com/11067335/154188128-2c840695-acc6-4c15-9302-fc764e5bd881.png)
+
+![stackScreens-02-02](https://user-images.githubusercontent.com/11067335/154188132-41283338-a5ff-47b3-9bcf-77f10b707fcb.png)
+
+![stackScreens-03](https://user-images.githubusercontent.com/11067335/154188135-bc7758e6-eb3e-479c-9241-e1e3f8a813c0.png)
+
+![stackScreens-04](https://user-images.githubusercontent.com/11067335/154188137-eb40470c-b591-426d-a743-fe80d60816cf.png)
+
 ### Wireframes
 
 ## Auth Stack 
@@ -47,13 +57,3 @@ I'll have to learn React Native and how user authentication works with mobile ap
 
 <img width="272" alt="Screenshot 2022-02-14 at 9 27 58 PM" src="https://user-images.githubusercontent.com/11067335/153998576-2257d502-dcf8-4602-8e25-ec0924463098.png">
 
-
-### App Screen Shots
-
-![stackScreens-01](https://user-images.githubusercontent.com/11067335/154188128-2c840695-acc6-4c15-9302-fc764e5bd881.png)
-
-![stackScreens-02-02](https://user-images.githubusercontent.com/11067335/154188132-41283338-a5ff-47b3-9bcf-77f10b707fcb.png)
-
-![stackScreens-03](https://user-images.githubusercontent.com/11067335/154188135-bc7758e6-eb3e-479c-9241-e1e3f8a813c0.png)
-
-![stackScreens-04](https://user-images.githubusercontent.com/11067335/154188137-eb40470c-b591-426d-a743-fe80d60816cf.png)
