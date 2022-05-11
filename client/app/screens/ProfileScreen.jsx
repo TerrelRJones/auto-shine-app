@@ -91,9 +91,9 @@ const ProfileScreen = () => {
             style={styles.profileName}
           >{`${userData.firstName} ${userData.lastName}`}</Text>
           <Text style={styles.locationTitle}>
-            {!userData.address[0]
+            {/* {!userData.address[0]
               ? "N/A"
-              : `${userData.address[0].city}, ${userData.address[0].state}`}
+              : `${userData.address[0].city}, ${userData.address[0].state}`} */}
           </Text>
         </View>
 

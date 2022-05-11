@@ -271,9 +271,9 @@ const ServiceScreen = () => {
             style={styles.input}
             placeholder="Don't want your tires shined? Let us know here!"
             onChangeText={(text) => setAppointmentComment(text)}
-            maxLength={20}
-            // multiline
-            // numberOfLines={1}
+            maxLength={140}
+            multiline
+            numberOfLines={4}
           />
           <CustomButton title="CONFIRM" onPress={paymentScreenNavigate} />
         </View>

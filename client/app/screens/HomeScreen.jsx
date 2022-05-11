@@ -19,6 +19,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/Auth";
 import { Loading } from "../components/Loading";
 
+import CustomButton from "../components/CustomButton";
+
 const HomeScreen = () => {
   const [userName, setUserName] = useState();
 
@@ -125,6 +127,12 @@ const HomeScreen = () => {
           </TouchableOpacity>
         )}
       />
+      {/* <CustomButton
+        title="Sign Out"
+        onPress={() => {
+          auth.signOut();
+        }}
+      /> */}
     </View>
   );
 };
