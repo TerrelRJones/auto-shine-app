@@ -189,7 +189,8 @@ const AppointmentScreen = () => {
             fontWeight: "bold",
           }}
         >
-          You have {appointmentLength} appointments scheduled.{" "}
+          You have {appointmentLength} appointment
+          {appointmentLength === 1 ? null : "s"} scheduled.{" "}
         </Text>
       </View>
       <FlatList
