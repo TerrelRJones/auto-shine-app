@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MdIcons from "@expo/vector-icons/MaterialIcons";
 import HomeStack from "./HomeStack";
 
-import ProfileStack from "../routes/ProfileStack";
+import ProfileStack from "./ProfileStack";
 import AppointmentScreen from "../screens/AppointmentScreen";
 import { color } from "../components/colors";
 

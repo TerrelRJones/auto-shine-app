@@ -2,13 +2,13 @@ import React from "react";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { color } from "./colors";
 
-type Props = {
-  title: any;
+export type CustomButtonProps = {
+  title: string | React.ReactNode;
   onPress: () => void;
-  disabled?: any;
+  disabled?: boolean;
 };
 
-const Button = ({ title, onPress, disabled }: Props) => {
+const Button = ({ title, onPress, disabled }: CustomButtonProps) => {
   return (
     <TouchableOpacity
       style={styles.button}

@@ -30,20 +30,20 @@ describe("/POST ", () => {
     expect(res.statusCode).toBe(200);
   });
 
-  test("should respond with a status code of 400 if any is missing", async () => {
-    const res = await request.post("/api/v1/register").send({
-      lastName: "last_test",
-      email: "test@test.com",
-      password: "password",
-      password2: "password",
-    });
+  // test("should respond with a status code of 400 if any is missing", async () => {
+  //   const res = await request.post("/api/v1/register").send({
+  //     lastName: "last_test",
+  //     email: "test@test.com",
+  //     password: "password",
+  //     password2: "password",
+  //   });
 
-    await expect(res.body).toEqual(
-      expect.objectContaining({
-        error: "All fields required!",
-      })
-    );
-  });
+  //   await expect(res.body).toEqual(
+  //     expect.objectContaining({
+  //       error: "All fields required!",
+  //     })
+  //   );
+  // });
 
   test('Should respond "Passwords dont match", if passwords dont match', async () => {
     const res = await request

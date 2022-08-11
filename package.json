@@ -12,7 +12,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "npx tsc",
     "postinstall": "tsc",
-    "test": "jest --forceExit --detectOpenHandles",
+    "test": "jest --forceExit --detectOpenHandles --verbose",
     "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "author": "Terrel Jones <TerrelRJones@gmail.com>",
