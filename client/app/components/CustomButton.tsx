@@ -4,7 +4,7 @@ import { color } from "./colors";
 
 export type CustomButtonProps = {
   title: string | React.ReactNode;
-  onPress: () => void;
+  onPress?: () => void;
   disabled?: boolean;
 };
 

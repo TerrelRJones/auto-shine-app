@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CustomButton from "../components/CustomButton";
 import Title from "../components/Title";
 import MdIcons from "@expo/vector-icons/MaterialIcons";
@@ -36,9 +36,9 @@ const ProfileScreen = () => {
     setVehicleData(res.vehicle);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     getUserInfo();
-  }, []);
+  }, [userData]);
 
   if (!userData) {
     return <Loading />;

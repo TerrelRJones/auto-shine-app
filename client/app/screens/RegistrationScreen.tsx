@@ -23,6 +23,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuth } from "../contexts/Auth";
 import Title from "../components/Title";
+import { useSignIn } from "../hooks/useSignIn";
 
 const RegistrationScreen = () => {
   const [firstName, setFirstName] = useState("");
@@ -30,18 +31,12 @@ const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-
-  const [loading, isLoading] = useState(false);
-
   const auth = useAuth();
+
+  const [{ loading }, { submitCredintials }] = useSignIn();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthStackParams>>();
-
-  const submitCredintials = async () => {
-    isLoading(true);
-    await auth.register(firstName, lastName, email, password, password2);
-  };
 
   return (
     <KeyboardAvoidingView
@@ -100,11 +95,26 @@ const RegistrationScreen = () => {
               setValue={setPassword2}
               secureTextEntry
             />
-            {loading ? (
+
+            {loading && (
               <ActivityIndicator color={"#000"} animating={true} size="small" />
-            ) : (
-              <CustomButton title="Register" onPress={submitCredintials} />
             )}
+
+            {!loading && (
+              <CustomButton
+                title="Register"
+                onPress={() =>
+                  submitCredintials({
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    password2,
+                  })
+                }
+              />
+            )}
+
             <View style={{ flexDirection: "row", marginVertical: 5 }}>
               <Text style={{ fontWeight: "600" }}>
                 Already have an account?

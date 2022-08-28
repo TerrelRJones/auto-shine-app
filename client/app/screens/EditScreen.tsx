@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { useAuth } from "../contexts/Auth";
 
@@ -54,7 +54,7 @@ const EditScreen = () => {
     });
   };
 
-  useEffect(() => {
+  useMemo(() => {
     getUserInfo();
   }, []);
 

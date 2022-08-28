@@ -19,20 +19,13 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthStackParams } from "../types";
 
-import { useAuth } from "../contexts/Auth";
 import Title from "../components/Title";
-import { color } from "../components/colors";
+import { useSignIn } from "../hooks/useSignIn";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, isLoading] = useState(false);
-  const auth = useAuth();
-
-  const signIn = async () => {
-    isLoading(true);
-    await auth.signIn(email, password);
-  };
+  const [{ loading }, { signIn }] = useSignIn();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<AuthStackParams>>();
@@ -80,10 +73,12 @@ const LoginScreen = () => {
                     size="small"
                   />
                 }
-                onPress={() => null}
               />
             ) : (
-              <CustomButton title="Login" onPress={signIn} />
+              <CustomButton
+                title="Login"
+                onPress={() => signIn({ email, password })}
+              />
             )}
             <CustomButtonSecondary
               title="Forgot Password"
