@@ -8,7 +8,7 @@ import NavBack from "../components/NavBack";
 import Title from "../components/Title";
 
 const ConfirmationScreen = () => {
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
   return (
     <View
       style={{
@@ -25,10 +25,7 @@ const ConfirmationScreen = () => {
         }}
       >
         <Text>APPOINTMENT CONFIRMED</Text>
-        <CustomButton
-          title="Go Home"
-          onPress={() => navigation.navigate("HomeStack")}
-        />
+        <CustomButton title="Go Home" onPress={() => navigate("HomeStack")} />
       </View>
     </View>
   );
