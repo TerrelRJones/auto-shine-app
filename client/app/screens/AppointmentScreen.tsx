@@ -24,7 +24,7 @@ const AppointmentScreen = () => {
   const [loading, setLoading] = useState<Boolean>();
   const appointmentLength: number = appointments.length;
 
-  const auth = useAuth();
+  const { BASE_URL, authData } = useAuth();
 
   interface Props {
     item: any;
@@ -56,12 +56,12 @@ const AppointmentScreen = () => {
 
   // Cancel Appointment Call
   const deleteAppointment = async (id: string) => {
-    await fetch(`${auth.BASE_URL}api/v1/appointment/${id}`, {
+    await fetch(`${BASE_URL}api/v1/appointment/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        token: `${auth.authData?.token}`,
+        token: `${authData?.token}`,
       },
     });
     getAppointments();
@@ -76,6 +76,10 @@ const AppointmentScreen = () => {
             progress={progress}
             dragX={dragX}
             onPress={() => deleteAppointment(`${item.id}`)}
+            item={undefined}
+            onRightPress={function (): void {
+              throw new Error("Function not implemented.");
+            }}
           />
         )}
       >
@@ -133,13 +137,13 @@ const AppointmentScreen = () => {
     try {
       setIsLoading(true);
       const data = await fetch(
-        `${auth.BASE_URL}api/v1/appointment/${auth.authData?.userId}`,
+        `${BASE_URL}api/v1/appointment/${authData?.userId}`,
         {
           method: "GET",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            token: `${auth.authData?.token}`,
+            token: `${authData?.token}`,
           },
         }
       );
@@ -194,8 +198,8 @@ const AppointmentScreen = () => {
         </Text>
       </View>
       <FlatList
-        showsVerticalScrollIndicator={false}
         data={appointments}
+        showsVerticalScrollIndicator={false}
         renderItem={appointmentCard}
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
