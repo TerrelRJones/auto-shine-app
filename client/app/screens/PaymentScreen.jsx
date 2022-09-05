@@ -34,16 +34,18 @@ const PaymentScreen = () => {
   const auth = useAuth();
 
   const route = useRoute();
-  const navigation = useNavigation();
+  const { navigate, goBack } = useNavigation();
 
-  const serviceTitle = route.params.serviceTitle;
-  const servicePrice = route.params.price;
-  const serviceId = route.params.serviceId;
-  const time = route.params.time;
-  const date = route.params.date;
-  const vehicle = route.params.vehicle;
-  const address = route.params.address;
-  const comment = route.params.comment;
+  const {
+    serviceTitle,
+    serviceId,
+    price,
+    time,
+    date,
+    vehicle,
+    address,
+    comment,
+  } = route.params;
 
   const fetchPaymentIntentClientSecret = async () => {
     setIsLoading(true);
@@ -55,7 +57,7 @@ const PaymentScreen = () => {
         token: `${auth.authData?.token}`,
       },
       body: JSON.stringify({
-        price: `${servicePrice}00`,
+        price: `${price}00`,
       }),
     });
     const { clientSecret, error } = await res.json();
@@ -74,7 +76,8 @@ const PaymentScreen = () => {
 
     try {
       const { clientSecret, error } = await fetchPaymentIntentClientSecret();
-      //2. confimr payment
+
+      //2. confimrm payment
       if (error) {
         console.log(error);
       } else {
@@ -86,10 +89,7 @@ const PaymentScreen = () => {
           alert(`Payment confirmation error ${error.message}`);
           setIsLoading(false);
         } else if (paymentIntent) {
-          navigation.navigate("Confirmation");
-          // alert("Payment Successful", [
-          //   { text: "OK", onPress: navigation.navigate("HomeStack") },
-          // ]);
+          navigate("Confirmation");
 
           // Setting users appoint into database
           const user = await fetch(`${auth.BASE_URL}api/v1/appointment`, {
@@ -100,11 +100,11 @@ const PaymentScreen = () => {
               token: `${auth.authData?.token}`,
             },
             body: JSON.stringify({
-              date: date,
-              time: time,
-              address: address,
+              date,
+              time,
+              address,
               type: serviceTitle,
-              vehicle: vehicle,
+              vehicle,
               comment: comment,
               appointmentId: auth.authData.userId,
             }),
@@ -146,10 +146,7 @@ const PaymentScreen = () => {
             <>
               <View style={{ backgroundColor: `${color.white}`, flex: 1 }}>
                 <View style={styles.styleContainer}>
-                  <Pressable
-                    onPress={() => navigation.goBack()}
-                    style={styles.btn}
-                  >
+                  <Pressable onPress={() => goBack()} style={styles.btn}>
                     <Fontisto name="angle-dobule-left" size={24} />
                   </Pressable>
                   <View
@@ -171,7 +168,7 @@ const PaymentScreen = () => {
                         fontWeight: "bold",
                         marginBottom: 20,
                       }}
-                    >{`$${servicePrice}.00`}</Text>
+                    >{`$${price}.00`}</Text>
                   </View>
                   <SmallTextTitle title="Services" />
                   <View style={{ marginBottom: 20, marginTop: 10 }}>
